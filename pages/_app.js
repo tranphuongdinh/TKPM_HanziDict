@@ -1,11 +1,10 @@
-import "../styles/globals.css";
-import type { AppProps } from "next/app";
-import { AuthProvider } from "../context/auth/auth.provider";
-import AppLayout from "../containers/AppLayout";
-import { useEffect, useState } from "react";
 import Head from "next/head";
+import { useEffect, useState } from "react";
+import AppLayout from "../containers/AppLayout";
+import { AuthProvider } from "../context/auth/auth.provider";
+import "../styles/globals.css";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }) {
     const [loaded, setLoaded] = useState(false);
     useEffect(() => {
         setLoaded(true);
@@ -14,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     return (
         <>
             <Head>
-                <title>Cybersoft Elearning</title>
+                <title>Hanzi Dict</title>
             </Head>
             {loaded && (
                 <AuthProvider>

@@ -1,0 +1,38 @@
+.tools {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.slider,
+.buttons {
+  width: 300px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sliderItem {
+  margin-top: 10px;
+}
+
+.sliderItem .label {
+  display: inline-block;
+  margin: 20px 0 20px 0;
+}
+
+.colorPicker {
+  width: 300px;
+}
+
+.buttons button {
+  padding: 5px 20px;
+  width: 120px;
+  text-align: center;
+  background-color: khaki;
+  margin-bottom: 10px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  outline: none;
+}

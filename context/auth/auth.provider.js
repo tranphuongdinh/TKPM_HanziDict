@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import { useReducer } from "react";
 import { AuthContext } from "./auth.context";
 const isBrowser = typeof window !== "undefined";
 const INITIAL_STATE = {
@@ -9,7 +9,7 @@ const INITIAL_STATE = {
     user: isBrowser && JSON.parse(localStorage.getItem("userInfo") || "null"),
 };
 
-function reducer(state: any, action: any) {
+function reducer(state, action) {
     switch (action.type) {
         case "LOGIN": {
             localStorage.setItem("access_token", action.payload.accessToken);
@@ -41,7 +41,7 @@ function reducer(state: any, action: any) {
     }
 }
 
-export const AuthProvider: React.FunctionComponent = ({ children }) => {
+export const AuthProvider = ({ children }) => {
     const [authState, authDispatch] = useReducer(reducer, INITIAL_STATE);
     return (
         <AuthContext.Provider value={{ authState, authDispatch }}>
