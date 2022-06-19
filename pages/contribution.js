@@ -1,5 +1,3 @@
-import "react-canvas-paint/dist/index.css";
-import "react-input-range/lib/css/index.css";
 import Template from "../containers/Template";
 
 const Contribution = () => {

@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import CInput from "react-composition-input";
-// import Dictaphone from "../Dictaphone";
 import styles from "./styles.module.scss";
 
 const Searchbar = () => {
