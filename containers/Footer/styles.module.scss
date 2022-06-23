@@ -1,4 +1,65 @@
 .wrapper {
-    height: 100px;
-    background-color: red;
+    background-color: #0091a7;
+    display: flex;
+    padding: 50px 200px;
+    gap: 30vh;
+    color: white;
+    div {
+        display: flex;
+        flex-direction: column;
+        h3 {
+            font-size: 24px;
+        }
+        a {
+            font-size: 18px;
+            cursor: pointer;
+            line-height: 50px;
+            i {
+                margin: 0 10px;
+                font-size: 30px;
+            }
+        }
+        a:hover {
+            color: rgb(221, 252, 255);
+            transform: translateY(1px);
+        }
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .wrapper {
+        padding: 50px 100px;
+        gap: 20vh;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+        gap: 50px;
+        h3 {
+            font-size: 20px;
+        }
+        a {
+            font-size: 16px;
+            li {
+                font-size: 10px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .wrapper {
+        padding: 20px;
+        h3 {
+            font-size: 15px;
+        }
+        a {
+            font-size: 12px;
+            li {
+                font-size: 10px;
+            }
+        }
+    }
 }

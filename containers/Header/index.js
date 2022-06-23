@@ -11,7 +11,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import Image from "next/image";
 import * as React from "react";
+import logo from "../../public/images/logocute.png";
 
 const pages = ["Tra cứu", "Luyện viết", "Đóng góp"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -36,12 +38,9 @@ const Header = () => {
     };
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" style={{ backgroundColor: "#0091a7" }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon
-                        sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-                    />
                     <Typography
                         variant="h6"
                         noWrap
@@ -57,7 +56,7 @@ const Header = () => {
                             textDecoration: "none",
                         }}
                     >
-                        LOGO
+                        <Image src={logo} width={40} height={40} alt="logo" />
                     </Typography>
 
                     <Box
