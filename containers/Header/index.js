@@ -13,7 +13,10 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import * as React from "react";
+import { AuthContext } from "../../context/auth/auth.context";
 import logo from "../../public/images/logocute.png";
+
+import AuthForm from "../../components/AuthForm";
 
 const pages = ["Tra cứu", "Luyện viết", "Đóng góp"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -35,6 +38,17 @@ const Header = () => {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+    };
+
+    const {
+        authState: { isAuthenticated },
+        authDispatch,
+    } = React.useContext(AuthContext);
+
+    const [showAuth, setShowAuth] = React.useState(false);
+
+    const handleShowAuth = (show) => {
+        setShowAuth(show);
     };
 
     return (
@@ -143,46 +157,67 @@ const Header = () => {
                         ))}
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            <IconButton
-                                onClick={handleOpenUserMenu}
-                                sx={{ p: 0 }}
-                            >
-                                <Avatar
-                                    alt="Remy Sharp"
-                                    src="/static/images/avatar/2.jpg"
-                                />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: "45px" }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem
-                                    key={setting}
-                                    onClick={handleCloseUserMenu}
+                    {isAuthenticated ? (
+                        <Box sx={{ flexGrow: 0 }}>
+                            <Tooltip title="Open settings">
+                                <IconButton
+                                    onClick={handleOpenUserMenu}
+                                    sx={{ p: 0 }}
                                 >
-                                    <Typography textAlign="center">
-                                        {setting}
-                                    </Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box>
+                                    <Avatar
+                                        alt="Remy Sharp"
+                                        src="/static/images/avatar/2.jpg"
+                                    />
+                                </IconButton>
+                            </Tooltip>
+                            <Menu
+                                sx={{ mt: "45px" }}
+                                id="menu-appbar"
+                                anchorEl={anchorElUser}
+                                anchorOrigin={{
+                                    vertical: "top",
+                                    horizontal: "right",
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "right",
+                                }}
+                                open={Boolean(anchorElUser)}
+                                onClose={handleCloseUserMenu}
+                            >
+                                {settings.map((setting) => (
+                                    <MenuItem
+                                        key={setting}
+                                        onClick={handleCloseUserMenu}
+                                    >
+                                        <Typography textAlign="center">
+                                            {setting}
+                                        </Typography>
+                                    </MenuItem>
+                                ))}
+                            </Menu>
+                        </Box>
+                    ) : (
+                        <Box>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                sx={{ mr: 2 }}
+                                onClick={() => {
+                                    handleShowAuth(true);
+                                }}
+                            >
+                                Đăng nhập
+                            </Button>
+                            {showAuth && (
+                                <AuthForm
+                                    handleShowAuth={handleShowAuth}
+                                    show={showAuth}
+                                ></AuthForm>
+                            )}
+                        </Box>
+                    )}
                 </Toolbar>
             </Container>
         </AppBar>
