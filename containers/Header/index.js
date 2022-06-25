@@ -83,7 +83,7 @@ const Header = () => {
 
     return (
         <AppBar position="static" style={{ backgroundColor: "#0091a7" }}>
-            <Container maxWidth="xl">
+            <Container maxWidth="lg">
                 <Toolbar disableGutters>
                     <Typography
                         variant="h6"

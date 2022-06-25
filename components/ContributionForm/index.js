@@ -20,10 +20,10 @@ const ContributionForm = () => {
     const inputField = {
         pinyin: "Pinyin",
         chineseName: "Chữ Hán",
-        mean: "Nghĩa hẹp",
-        deepMean: "Nghĩa rộng",
-        explain: "Giải thích nghĩa",
         sino: "Từ Hán Việt",
+        mean: "Nghĩa",
+        deepMean: "Nghĩa mở rộng",
+        explain: "Giải thích",
     };
 
     const {

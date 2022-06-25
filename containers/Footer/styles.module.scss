@@ -4,7 +4,6 @@
     .wrapperContainer {
         display: flex;
         flex-direction: row;
-        padding: 20px 0;
         gap: 30vh;
         color: white;
         div {
@@ -13,48 +12,21 @@
             h3 {
                 font-size: 24px;
             }
-<<<<<<< HEAD
             a {
                 display: flex;
                 align-items: center;
                 font-size: 16px;
+                width: -webkit-fit-content;
+                width: -moz-fit-content;
                 width: fit-content;
                 cursor: pointer;
-                line-height: 50px;
+                line-height: 40px;
                 .icon {
                     margin-right: 10px;
                 }
             }
             a:hover {
                 color: rgb(221, 252, 255);
-=======
-        }
-        a:hover {
-            color: #ddfcff;
-            transform: translateY(1px);
-        }
-    }
-}
-
-@media screen and (max-width: 992px) {
-    .wrapper {
-        padding: 50px 100px;
-        gap: 20vh;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .wrapper {
-        flex-direction: column;
-        gap: 50px;
-        h3 {
-            font-size: 20px;
-        }
-        a {
-            font-size: 16px;
-            li {
-                font-size: 10px;
->>>>>>> 17629a6179e8310a1b461e6cbfae270a62d4d40a
             }
         }
     }
