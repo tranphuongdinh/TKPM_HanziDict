@@ -1,10 +1,10 @@
-import { USER_URI } from "../constants/api";
+import { AUTH_URI } from "../constants/api";
 import axios from "./index";
 
 class AuthClient {
     login(formData) {
         return axios
-            .post(`${USER_URI}/login`, { ...formData })
+            .post(`${AUTH_URI}/login`, { ...formData })
             .then((response) => {
                 return response;
             })
@@ -13,9 +13,9 @@ class AuthClient {
             });
     }
 
-    register(formData) {
+    signup(formData) {
         return axios
-            .post(`${USER_URI}/register`, { ...formData })
+            .post(`${AUTH_URI}/signup`, { ...formData })
             .then((response) => {
                 return response;
             })
