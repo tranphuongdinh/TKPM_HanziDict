@@ -13,6 +13,7 @@
             h3 {
                 font-size: 24px;
             }
+<<<<<<< HEAD
             a {
                 display: flex;
                 align-items: center;
@@ -26,6 +27,34 @@
             }
             a:hover {
                 color: rgb(221, 252, 255);
+=======
+        }
+        a:hover {
+            color: #ddfcff;
+            transform: translateY(1px);
+        }
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .wrapper {
+        padding: 50px 100px;
+        gap: 20vh;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+        gap: 50px;
+        h3 {
+            font-size: 20px;
+        }
+        a {
+            font-size: 16px;
+            li {
+                font-size: 10px;
+>>>>>>> 17629a6179e8310a1b461e6cbfae270a62d4d40a
             }
         }
     }

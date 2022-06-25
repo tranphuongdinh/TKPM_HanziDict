@@ -1,14 +1,15 @@
+import Container from "@mui/material/Container";
 import Head from "next/head";
 import styles from "./styles.module.scss";
 
 const Template = ({ children, title }) => {
     return (
-        <>
+        <Container maxWidth="xl" className={styles.container}>
             <Head>
                 <title>{title}</title>
             </Head>
-            <div className={styles.container}>{children}</div>
-        </>
+            {children}
+        </Container>
     );
 };
 

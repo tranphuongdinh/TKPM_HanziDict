@@ -1,4 +1,3 @@
-import AdbIcon from "@mui/icons-material/Adb";
 import MenuIcon from "@mui/icons-material/Menu";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
@@ -12,14 +11,13 @@ import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import * as React from "react";
+import AuthForm from "../../components/AuthForm";
 import { AuthContext } from "../../context/auth/auth.context";
 import logo from "../../public/images/logocute.png";
-
-import AuthForm from "../../components/AuthForm";
-
-const pages = ["Tra cứu", "Luyện viết", "Đóng góp"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import styles from "./styles.module.scss";
 
 const Header = () => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -50,6 +48,38 @@ const Header = () => {
     const handleShowAuth = (show) => {
         setShowAuth(show);
     };
+
+    const router = useRouter();
+
+    const pages = [
+        {
+            label: "Tra cứu",
+            url: "/",
+        },
+        {
+            label: "Luyện viết",
+            url: "/writing",
+        },
+        { label: "Đóng góp", url: "/contribution" },
+    ];
+    const settings = [
+        {
+            label: "Account",
+            event: () => {
+                router.push("/account");
+            },
+        },
+        {
+            label: "Logout",
+            event: () => {
+                authDispatch({
+                    type: "LOGOUT",
+                });
+                setShowAuth(false);
+                window.location.href = "/";
+            },
+        },
+    ];
 
     return (
         <AppBar position="static" style={{ backgroundColor: "#0091a7" }}>
@@ -108,20 +138,16 @@ const Header = () => {
                             }}
                         >
                             {pages.map((page) => (
-                                <MenuItem
-                                    key={page}
-                                    onClick={handleCloseNavMenu}
-                                >
-                                    <Typography textAlign="center">
-                                        {page}
-                                    </Typography>
-                                </MenuItem>
+                                <Link href={page.url} key={page.label}>
+                                    <MenuItem onClick={handleCloseNavMenu}>
+                                        <Typography textAlign="center">
+                                            {page.label}
+                                        </Typography>
+                                    </MenuItem>
+                                </Link>
                             ))}
                         </Menu>
                     </Box>
-                    <AdbIcon
-                        sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-                    />
                     <Typography
                         variant="h5"
                         noWrap
@@ -138,22 +164,35 @@ const Header = () => {
                             textDecoration: "none",
                         }}
                     >
-                        LOGO
+                        <Image src={logo} width={40} height={40} alt="logo" />
                     </Typography>
                     <Box
                         sx={{
                             flexGrow: 1,
                             display: { xs: "none", md: "flex" },
+                            ml: 2,
                         }}
                     >
                         {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: "white", display: "block" }}
-                            >
-                                {page}
-                            </Button>
+                            <Link href={page.url} key={page.label}>
+                                <Button
+                                    onClick={handleCloseNavMenu}
+                                    sx={{
+                                        my: 2,
+                                        mr: 2,
+                                        color: "white",
+                                        display: "block",
+                                        position: "relative",
+                                    }}
+                                    className={
+                                        router.asPath === page.url
+                                            ? styles.active
+                                            : ""
+                                    }
+                                >
+                                    {page.label}
+                                </Button>
+                            </Link>
                         ))}
                     </Box>
 
@@ -191,8 +230,11 @@ const Header = () => {
                                         key={setting}
                                         onClick={handleCloseUserMenu}
                                     >
-                                        <Typography textAlign="center">
-                                            {setting}
+                                        <Typography
+                                            textAlign="center"
+                                            onClick={setting.event}
+                                        >
+                                            {setting.label}
                                         </Typography>
                                     </MenuItem>
                                 ))}
