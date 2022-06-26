@@ -229,7 +229,7 @@ const Header = () => {
             <Box>
               <Button
                 variant="contained"
-                className={styles.btnLogin}
+                className="btnLightPrimiary"
                 sx={{ mr: 2 }}
                 onClick={() => {
                   handleShowAuth(true);

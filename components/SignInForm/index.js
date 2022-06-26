@@ -94,7 +94,12 @@ export default function SignInForm() {
         />
       </Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button type="submit" variant="contained" sx={{ mt: 2 }}>
+        <Button
+          className="btnPrimary"
+          type="submit"
+          variant="contained"
+          sx={{ mt: 2 }}
+        >
           Đăng nhập
         </Button>
       </Box>

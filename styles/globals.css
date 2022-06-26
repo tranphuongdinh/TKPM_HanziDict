@@ -69,3 +69,25 @@ textarea {
 .react-colorful {
     width: 100% !important;
 }
+
+.btnLightPrimiary {
+    margin-top: 2px;
+    background-color: white !important;
+    color: #0091a7 !important;
+    font-weight: 500 !important;
+}
+
+.btnLightPrimiary:hover {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.btnPrimary {
+    margin-top: 2px;
+    background-color: #0091a7 !important;
+    color: #fff !important;
+    font-weight: 500 !important;
+}
+
+.btnPrimary:hover {
+    background-color: #0091a7e9 !important;
+}
