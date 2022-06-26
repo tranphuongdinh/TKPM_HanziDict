@@ -1,43 +1,68 @@
 .canvasWrapper {
-    background-color: rgb(237, 237, 237);
+    background-color: #ededed;
     padding: 20px;
     overflow-x: hidden;
-    .tools {
+    box-sizing: border-box;
+    .canvasSupport {
+        width: 100%;
+        margin-top: 20px;
         display: flex;
-        justify-content: space-between;
-        .buttons {
-            width: calc(100% / 3);
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            button {
-                padding: 8px 10px;
-                width: 120px;
-                text-align: center;
-                background-color: #0091a7;
-                margin-bottom: 10px;
-                border: 1px solid #fff;
-                border-radius: 10px;
-                color: white;
-                outline: none;
-            }
-            button:hover {
-                background-color: #007081;
-                transition: all 0.3s;
-                cursor: pointer;
+        flex-direction: row;
+        box-sizing: border-box;
+        .toolCard {
+            width: 50%;
+            margin-right: 10px;
+            .tools {
+                width: 100%;
+                height: 100%;
+                margin: 10px;
+                display: flex;
+                padding: 20px 30px;
+                flex-direction: column;
+                align-items: center;
+                .buttons {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    gap: 5px;
+                    justify-content: center;
+                    button {
+                        width: 100%;
+                        padding: 8px 10px;
+                        text-align: center;
+                        background-color: #0091a7;
+                        margin-bottom: 10px;
+                        border: 1px solid #fff;
+                        border-radius: 10px;
+                        color: white;
+                        outline: none;
+                        font-weight: 600;
+                    }
+                    button:hover {
+                        background-color: #007081;
+                        transition: all 0.3s;
+                        cursor: pointer;
+                    }
+                }
+                .sliderItem {
+                    width: (100%);
+                    .label {
+                        display: inline-block;
+                        margin: 20px 0 20px 0;
+                        font-weight: 600;
+                    }
+                    .colorPicker {
+                        width: (100%);
+                    }
+                }
             }
         }
-        .sliderItem {
-            width: calc(100% / 3);
-            .label {
-                display: inline-block;
-                margin: 20px 0 20px 0;
-            }
-            .colorPicker {
-                width: 80%;
-            }
+        .outputImage {
+            margin-left: 10px;
+            width: 50%;
+            background-color: white;
+            padding: 20px 30px;
+            width: 50% !important;
         }
     }
 }

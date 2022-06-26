@@ -62,6 +62,10 @@ textarea {
 
 .input-range__slider,
 .input-range__track--active {
-  background: #007081 !important;
-  border-color: #007081 !important;
+    background: #007081 !important;
+    border-color: #007081 !important;
+}
+
+.react-colorful {
+    width: 100% !important;
 }
