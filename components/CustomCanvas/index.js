@@ -6,7 +6,7 @@ import InputRange from "react-input-range";
 import "react-input-range/lib/css/index.css";
 import styles from "./styles.module.scss";
 import Card from "@mui/material/Card";
-
+import { saveAs } from "file-saver";
 const CustomCanvas = () => {
   const defaultProps = {
     onChange: null,
@@ -83,6 +83,7 @@ const CustomCanvas = () => {
                     "savedDrawing",
                     saveableCanvas.getSaveData()
                   );
+                  saveAs(saveableCanvas.getDataURL(), "image.jpg");
                 }}
               >
                 Save
