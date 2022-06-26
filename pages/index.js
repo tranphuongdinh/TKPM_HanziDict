@@ -16,7 +16,7 @@ export async function getServerSideProps(ctx) {
         const data = await getCharactersClient().getAllChars();
         return {
             props: {
-                data,
+                data: data || [],
             },
         };
     } catch (e) {

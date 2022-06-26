@@ -1,11 +1,12 @@
 .canvasWrapper {
     background-color: rgb(237, 237, 237);
     padding: 20px;
+    overflow-x: hidden;
     .tools {
         display: flex;
         justify-content: space-between;
         .buttons {
-            width: calc(100%/3);
+            width: calc(100% / 3);
             margin: 0 auto;
             display: flex;
             flex-direction: column;
@@ -29,7 +30,7 @@
             }
         }
         .sliderItem {
-            width: calc(100%/3);
+            width: calc(100% / 3);
             .label {
                 display: inline-block;
                 margin: 20px 0 20px 0;
