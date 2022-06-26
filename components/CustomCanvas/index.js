@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import CanvasDraw from "react-canvas-draw";
 import { HexColorPicker } from "react-colorful";
@@ -36,6 +37,7 @@ const CustomCanvas = () => {
     const [canvasWidth, setCanvasWidth] = useState(800);
     const [canvasHeight, setCanvasHeight] = useState(400);
     const [brushColor, setBrushColor] = useState("#444");
+    const [outputImage, setOutputImage] = useState("");
     const wrapperRef = useRef(null);
 
     useEffect(() => {
@@ -95,6 +97,7 @@ const CustomCanvas = () => {
                     <button
                         onClick={() => {
                             console.log(saveableCanvas.getDataURL());
+                            setOutputImage(saveableCanvas.getDataURL());
                             alert("DataURL written to console");
                         }}
                     >
@@ -119,6 +122,10 @@ const CustomCanvas = () => {
                             onChange={(value) => setBrushColor(value)}
                         />
                     </div>
+
+                    {outputImage && (
+                        <Image src={outputImage} width={400} height={200} />
+                    )}
                 </div>
             </div>
         </div>
