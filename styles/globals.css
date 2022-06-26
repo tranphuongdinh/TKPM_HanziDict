@@ -91,3 +91,12 @@ textarea {
 .btnPrimary:hover {
     background-color: #0091a7e9 !important;
 }
+
+.css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected,
+.css-1s5vo3j-MuiButtonBase-root-MuiButton-root {
+    color: #0091a7 !important;
+}
+
+.css-1aquho2-MuiTabs-indicator {
+    background-color: #0091a7 !important;
+}
