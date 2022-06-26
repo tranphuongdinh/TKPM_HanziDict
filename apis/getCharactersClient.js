@@ -1,5 +1,5 @@
-import { CHAR_URI } from "../constants/api";
 import axios from "./index";
+import { CHAR_URI } from "/constants/api";
 
 class CharactersClient {
     getAllChars() {
@@ -24,7 +24,7 @@ class CharactersClient {
             });
     }
 
-    registerChar(formData) {
+    uploadChar(formData) {
         return axios
             .post(`${CHAR_URI}/uploadCharacter`, { ...formData })
             .then((response) => {

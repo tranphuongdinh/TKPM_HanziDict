@@ -1,5 +1,5 @@
 import axios from "./index";
-import { USER_URI } from "../constants/api";
+import { USER_URI } from "/constants/api";
 
 class UserClient {
     getUserInfo() {

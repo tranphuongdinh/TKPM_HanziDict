@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { REST_API_URL } from "../constants/api";
+import { REST_API_URL } from "/constants/api";
 
 const axiosInstance = axios.create({
     baseURL: REST_API_URL,

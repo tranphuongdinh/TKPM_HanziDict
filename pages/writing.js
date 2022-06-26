@@ -1,5 +1,5 @@
-import CustomCanvas from "../components/CustomCanvas";
-import Template from "../containers/Template";
+import CustomCanvas from "/components/CustomCanvas";
+import Template from "/containers/Template";
 
 const Writing = () => {
     return (

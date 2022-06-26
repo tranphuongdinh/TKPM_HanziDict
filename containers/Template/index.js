@@ -4,7 +4,7 @@ import styles from "./styles.module.scss";
 
 const Template = ({ children, title }) => {
     return (
-        <Container maxWidth="xl" className={styles.container}>
+        <Container maxWidth="lg" className={styles.container}>
             <Head>
                 <title>{title}</title>
             </Head>

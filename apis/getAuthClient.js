@@ -1,5 +1,5 @@
-import { AUTH_URI } from "../constants/api";
 import axios from "./index";
+import { AUTH_URI } from "/constants/api";
 
 class AuthClient {
     login(formData) {

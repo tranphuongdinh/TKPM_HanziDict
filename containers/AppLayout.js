@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import {
     PRIMARY_BACKGROUND_COLOR,
     PRIMARY_COLOR_HOVER,
-} from "../constants/style";
+} from "/constants/style";
 import Footer from "./Footer";
 import Header from "./Header";
 

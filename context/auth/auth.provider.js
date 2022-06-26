@@ -3,7 +3,7 @@ import { AuthContext } from "./auth.context";
 const isBrowser = typeof window !== "undefined";
 const INITIAL_STATE = {
     isAuthenticated: isBrowser && !!localStorage.getItem("access_token"),
-    token: "",
+    token: isBrowser ? localStorage.getItem("access_token") || "" : "",
 };
 
 function reducer(state, action) {

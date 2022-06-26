@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import AppLayout from "../containers/AppLayout";
-import { AuthProvider } from "../context/auth/auth.provider";
+import AppLayout from "/containers/AppLayout";
+import { AuthProvider } from "/context/auth/auth.provider";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {

@@ -1,6 +1,6 @@
-import { getCharactersClient } from "../apis/getCharactersClient";
-import Searchbar from "../components/Searchbar";
-import Template from "../containers/Template";
+import { getCharactersClient } from "/apis/getCharactersClient";
+import Searchbar from "/components/Searchbar";
+import Template from "/containers/Template";
 
 const Home = ({ data }) => {
     console.log(data);
@@ -12,12 +12,21 @@ const Home = ({ data }) => {
 };
 
 export async function getServerSideProps(ctx) {
-    const data = await getCharactersClient().getAllChars();
-    return {
-        props: {
-            data,
-        },
-    };
+    try {
+        const data = await getCharactersClient().getAllChars();
+        return {
+            props: {
+                data,
+            },
+        };
+    } catch (e) {
+        console.log(e);
+        return {
+            props: {
+                data: [],
+            },
+        };
+    }
 }
 
 export default Home;

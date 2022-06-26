@@ -14,10 +14,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
-import AuthForm from "../../components/AuthForm";
-import { AuthContext } from "../../context/auth/auth.context";
-import logo from "../../public/images/logocute.png";
 import styles from "./styles.module.scss";
+import AuthForm from "/components/AuthForm";
+import { AuthContext } from "/context/auth/auth.context";
+import logo from "/public/images/logocute.png";
 
 const Header = () => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -76,7 +76,6 @@ const Header = () => {
                     type: "LOGOUT",
                 });
                 setShowAuth(false);
-                window.location.href = "/";
             },
         },
     ];
@@ -228,12 +227,12 @@ const Header = () => {
                                 {settings.map((setting) => (
                                     <MenuItem
                                         key={setting}
-                                        onClick={handleCloseUserMenu}
+                                        onClick={() => {
+                                            setting.event();
+                                            handleCloseUserMenu();
+                                        }}
                                     >
-                                        <Typography
-                                            textAlign="center"
-                                            onClick={setting.event}
-                                        >
+                                        <Typography textAlign="center">
                                             {setting.label}
                                         </Typography>
                                     </MenuItem>

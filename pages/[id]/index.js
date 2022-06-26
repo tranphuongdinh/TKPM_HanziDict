@@ -1,5 +1,5 @@
-import { getCharactersClient } from "../../apis/getCharactersClient";
-import Template from "../../containers/Template";
+import { getCharactersClient } from "/apis/getCharactersClient";
+import Template from "/containers/Template";
 
 const SearchResult = ({ data, char }) => {
     return (
