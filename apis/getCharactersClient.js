@@ -13,6 +13,17 @@ class CharactersClient {
             });
     }
 
+    getCommonChars() {
+        return axios
+            .get(`${CHAR_URI}/commonCharacters`)
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => {
+                return error?.response?.data;
+            });
+    }
+
     getCharById(id) {
         return axios
             .get(`${CHAR_URI}/getCharacter/${id}`)
