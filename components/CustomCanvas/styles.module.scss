@@ -64,4 +64,19 @@
             width: 50% !important;
         }
     }
+    @media screen and (max-width: 768px) {
+        .canvasSupport {
+            flex-direction: column;
+            .toolCard {
+                width: 100%;
+                padding: 20px 30px;
+            }
+            .outputImage {
+                margin: 20px 0 0 0;
+                padding: 20px 30px;
+                width: 100% !important;
+                height: 300px;
+            }
+        }
+    }
 }
