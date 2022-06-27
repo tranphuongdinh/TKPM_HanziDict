@@ -69,11 +69,11 @@ textarea {
 
 .react-colorful {
   width: 100% !important;
-  height: 125px;
+  height: 100px !important;
 }
 
 .react-colorful__hue {
-  height: 10px;
+  height: 8px !important;
 }
 
 .btnLightPrimiary {
