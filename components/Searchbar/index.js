@@ -41,7 +41,7 @@ export default function SearchBar({ allChars, handleSearch }) {
                 renderInput={(params) => (
                     <TextField
                         {...params}
-                        label="Search input"
+                        label="Nhập từ khóa để tra cứu"
                         InputProps={{
                             ...params.InputProps,
                             type: "search",

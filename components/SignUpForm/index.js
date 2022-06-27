@@ -107,7 +107,7 @@ export default function SignUpForm() {
                     render={({ field }) => (
                         <TextField
                             error={!!errors?.password}
-                            label="Password"
+                            label="Mật khẩu"
                             helperText={errors?.password?.message}
                             variant="standard"
                             type="password"
@@ -123,7 +123,7 @@ export default function SignUpForm() {
                     render={({ field }) => (
                         <TextField
                             error={errors?.confirmedPassword}
-                            label="Confirm Password"
+                            label="Xác nhận mật khẩu"
                             helperText={errors?.confirmedPassword?.message}
                             variant="standard"
                             type="password"

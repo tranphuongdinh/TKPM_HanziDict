@@ -1,3 +1,8 @@
+import AutoFixNormalIcon from "@mui/icons-material/AutoFixNormal";
+import DeleteIcon from "@mui/icons-material/Delete";
+import SaveIcon from "@mui/icons-material/Save";
+import UndoIcon from "@mui/icons-material/Undo";
+import { Button } from "@mui/material";
 import Card from "@mui/material/Card";
 import { saveAs } from "file-saver";
 import Image from "next/image";
@@ -68,6 +73,9 @@ const CustomCanvas = () => {
                 canvasWidth={canvasWidth}
                 canvasHeight={canvasHeight}
                 brushColor={brushColor}
+                onChange={() => {
+                    setOutputImage(saveableCanvas.getDataURL());
+                }}
             />
             <div className={styles.canvasSupport}>
                 <Card
@@ -77,7 +85,10 @@ const CustomCanvas = () => {
                 >
                     <div className={styles.tools}>
                         <div className={styles.buttons}>
-                            <button
+                            <Button
+                                variant="contained"
+                                className="btnPrimary"
+                                startIcon={<SaveIcon />}
                                 onClick={() => {
                                     saveAs(
                                         saveableCanvas.getDataURL(),
@@ -86,28 +97,39 @@ const CustomCanvas = () => {
                                 }}
                             >
                                 Save
-                            </button>
-                            <button
+                            </Button>
+                            <Button
+                                variant="contained"
+                                className="btnPrimary"
+                                startIcon={<AutoFixNormalIcon />}
                                 onClick={() => {
                                     saveableCanvas.eraseAll();
                                 }}
                             >
                                 Erase
-                            </button>
-                            <button
+                            </Button>
+                            <Button
+                                startIcon={<UndoIcon />}
+                                variant="contained"
+                                className="btnPrimary"
                                 onClick={() => {
                                     saveableCanvas.undo();
                                 }}
                             >
                                 Undo
-                            </button>
-                            <button
+                            </Button>
+
+                            <Button
+                                variant="contained"
+                                className="btnPrimary"
+                                startIcon={<DeleteIcon />}
                                 onClick={() => {
-                                    setOutputImage(saveableCanvas.getDataURL());
+                                    saveableCanvas.clear();
+                                    setOutputImage("");
                                 }}
                             >
-                                Refresh Ouput
-                            </button>
+                                Clear
+                            </Button>
                         </div>
 
                         <div className={styles.sliderItem}>
@@ -132,12 +154,11 @@ const CustomCanvas = () => {
                 </Card>
                 <Card
                     className={styles.outputImage}
+                    sx={{ position: "relative" }}
                     variant="outlined"
                     //   sx={{ minWidth: "50%" }}
                 >
-                    {outputImage && (
-                        <Image src={outputImage} width={400} height={200} />
-                    )}{" "}
+                    {outputImage && <Image src={outputImage} layout="fill" />}
                 </Card>
             </div>
         </div>

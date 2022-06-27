@@ -27,20 +27,6 @@
                     justify-content: center;
                     button {
                         width: 100%;
-                        padding: 8px 10px;
-                        text-align: center;
-                        background-color: #0091a7;
-                        margin-bottom: 10px;
-                        border: 1px solid #fff;
-                        border-radius: 10px;
-                        color: white;
-                        outline: none;
-                        font-weight: 600;
-                    }
-                    button:hover {
-                        background-color: #007081;
-                        transition: all 0.3s;
-                        cursor: pointer;
                     }
                 }
                 .sliderItem {
@@ -62,6 +48,21 @@
             background-color: white;
             padding: 20px 30px;
             width: 50% !important;
+        }
+    }
+    @media screen and (max-width: 768px) {
+        .canvasSupport {
+            flex-direction: column;
+            .toolCard {
+                width: 100%;
+                padding: 20px 30px;
+            }
+            .outputImage {
+                margin: 20px 0 0 0;
+                padding: 20px 30px;
+                width: 100% !important;
+                height: 300px;
+            }
         }
     }
 }

@@ -85,7 +85,7 @@ export default function SignInForm() {
                     render={({ field }) => (
                         <TextField
                             error={!!errors?.password}
-                            label="Password"
+                            label="Mật khẩu"
                             helperText={errors?.password?.message}
                             variant="standard"
                             type="password"
