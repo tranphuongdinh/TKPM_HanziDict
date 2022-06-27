@@ -106,7 +106,7 @@ const ContributionForm = () => {
               header="Kéo ảnh vào đây"
               leftLabel="hoặc"
               rightLabel="để chọn file"
-              buttonLabel="click here"
+              buttonLabel="click vào đây"
               buttonRemoveLabel="Remove all"
               maxFileSize={10}
               maxUploadFiles={0}
