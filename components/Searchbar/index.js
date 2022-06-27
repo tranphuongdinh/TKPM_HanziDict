@@ -36,25 +36,28 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 
 export default function FreeSolo() {
-    return (
-        <Stack spacing={2} sx={{ width: 300 }}>
-            <Autocomplete
-                freeSolo
-                id="free-solo-2-demo"
-                disableClearable
-                options={top100Films.map((option) => option.title)}
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        label="Search input"
-                        InputProps={{
-                            ...params.InputProps,
+    return ( <
+        Stack spacing = { 2 }
+        sx = {
+            { width: 300 } } >
+        <
+        Autocomplete freeSolo id = "free-solo-2-demo"
+        disableClearable options = { top100Films.map((option) => option.title) }
+        renderInput = {
+            (params) => ( <
+                TextField {...params }
+                label = "Nhập từ khóa để tra cứu"
+                InputProps = {
+                    {
+                        ...params.InputProps,
                             type: "search",
-                        }}
-                    />
-                )}
-            />
-        </Stack>
+                    }
+                }
+                />
+            )
+        }
+        /> <
+        /Stack>
     );
 }
 

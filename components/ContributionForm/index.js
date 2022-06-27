@@ -103,9 +103,9 @@ const ContributionForm = () => {
               multiFile={true}
               disabled={false}
               title="Ảnh minh họa từ"
-              header="Drop your images here"
-              leftLabel="or"
-              rightLabel="to select files"
+              header="Kéo ảnh vào đây"
+              leftLabel="hoặc"
+              rightLabel="để chọn file"
               buttonLabel="click here"
               buttonRemoveLabel="Remove all"
               maxFileSize={10}
@@ -132,7 +132,7 @@ const ContributionForm = () => {
             className="btnPrimary"
             endIcon={<UploadIcon />}
           >
-            Upload
+            Tải lên
           </Button>
         </Box>
       </form>
