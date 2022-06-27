@@ -54,6 +54,9 @@ const Footer = () => {
           </a>
         </div>
       </Container>
+      <p className={styles.copyright}>
+        &copy; 2022 | TKPM Team TPĐ - ĐMB - VNT
+      </p>
     </div>
   );
 };
