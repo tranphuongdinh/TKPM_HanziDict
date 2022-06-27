@@ -105,3 +105,7 @@ textarea {
 .css-1e6y48t-MuiButtonBase-root-MuiButton-root {
     margin-right: 20px !important;
 }
+
+.styles_active__YeEo9::after {
+    height: 1px !important;
+}

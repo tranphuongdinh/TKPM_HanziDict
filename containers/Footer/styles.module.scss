@@ -30,39 +30,10 @@
             }
         }
     }
-    @media screen and (max-width: 992px) {
-        .wrapper {
-            padding: 50px 100px;
-            gap: 20vh;
-        }
-    }
     @media screen and (max-width: 768px) {
-        .wrapper {
+        .wrapperContainer {
             flex-direction: column;
-            gap: 50px;
-            h3 {
-                font-size: 20px;
-            }
-            a {
-                font-size: 16px;
-                li {
-                    font-size: 10px;
-                }
-            }
-        }
-    }
-    @media screen and (max-width: 480px) {
-        .wrapper {
-            padding: 20px;
-            h3 {
-                font-size: 15px;
-            }
-            a {
-                font-size: 12px;
-                li {
-                    font-size: 10px;
-                }
-            }
+            gap: 30px;
         }
     }
 }
