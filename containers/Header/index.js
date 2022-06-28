@@ -15,6 +15,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
+import { v4 as uuidv4 } from "uuid";
 import styles from "./styles.module.scss";
 import AuthForm from "/components/AuthForm";
 import { AuthContext } from "/context/auth/auth.context";
@@ -52,7 +53,7 @@ const Header = () => {
 
     const router = useRouter();
 
-    const pages = [
+    let pages = [
         {
             label: "Tra cứu",
             url: "/",
@@ -63,6 +64,14 @@ const Header = () => {
         },
         { label: "Đóng góp", url: "/contribution" },
     ];
+
+    if (user?.type === "ADMIN") {
+        pages.push({
+            label: "Quản lý từ",
+            url: "/management",
+        });
+    }
+
     const settings = [
         {
             label: "Tài khoản",
@@ -139,7 +148,7 @@ const Header = () => {
                             }}
                         >
                             {pages.map((page) => (
-                                <Link href={page.url} key={page.label}>
+                                <Link href={page.url} key={uuidv4()}>
                                     <MenuItem onClick={handleCloseNavMenu}>
                                         <Typography textAlign="center">
                                             {page.label}
@@ -175,7 +184,7 @@ const Header = () => {
                         }}
                     >
                         {pages.map((page) => (
-                            <Link href={page.url} key={page.label}>
+                            <Link href={page.url} key={uuidv4()}>
                                 <Button
                                     onClick={handleCloseNavMenu}
                                     sx={{
@@ -227,7 +236,7 @@ const Header = () => {
                             >
                                 {settings.map((setting) => (
                                     <MenuItem
-                                        key={setting}
+                                        key={uuidv4()}
                                         onClick={() => {
                                             setting.event();
                                             handleCloseUserMenu();

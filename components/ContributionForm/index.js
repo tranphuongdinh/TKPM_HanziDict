@@ -9,6 +9,7 @@ import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { v4 as uuidv4 } from "uuid";
 import * as yup from "yup";
 import FileUpload from "../FileUploader";
 import styles from "./styles.module.scss";
@@ -90,13 +91,7 @@ const ContributionForm = ({ defaultChar }) => {
                 <Grid container spacing={2}>
                     {Object.keys(inputField).map((key, index) => {
                         return (
-                            <Grid
-                                item
-                                xs={12}
-                                sm={6}
-                                xl={4}
-                                key={`uploadCharForm-${key}-${index}`}
-                            >
+                            <Grid item xs={12} sm={6} xl={4} key={uuidv4()}>
                                 <Controller
                                     name={key}
                                     control={control}

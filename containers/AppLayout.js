@@ -1,11 +1,12 @@
 import NextNProgress from "nextjs-progressbar";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import ScrollToTop from "react-scroll-to-top";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "./Footer";
 import Header from "./Header";
 import { getUserClient } from "/apis/getUserClient";
+import LoadingScreen from "/components/LoadingScreen";
 import {
     PRIMARY_BACKGROUND_COLOR,
     PRIMARY_COLOR_HOVER,
@@ -18,8 +19,11 @@ const AppLayout = ({ children }) => {
         authDispatch,
     } = useContext(AuthContext);
 
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         const getUser = async () => {
+            setLoading(true);
             if (isAuthenticated && !user) {
                 const res = await getUserClient().getUserInfo();
                 if (res?.success) {
@@ -30,6 +34,7 @@ const AppLayout = ({ children }) => {
                     });
                 }
             }
+            setLoading(false);
         };
 
         getUser();
@@ -37,6 +42,7 @@ const AppLayout = ({ children }) => {
 
     return (
         <div>
+            {loading && <LoadingScreen />}
             <NextNProgress color={PRIMARY_COLOR_HOVER} height={5} />
             <ToastContainer
                 position="top-right"

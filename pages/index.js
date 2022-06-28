@@ -3,6 +3,7 @@ import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
+import { v4 as uuidv4 } from "uuid";
 import { PRIMARY_COLOR } from "../constants/style";
 import { getCharactersClient } from "/apis/getCharactersClient";
 import Searchbar from "/components/Searchbar";
@@ -49,14 +50,7 @@ const Home = ({ data, popularCharacters }) => {
             </Typography>
             <Grid container spacing={2}>
                 {popularCharacters.map((char, index) => (
-                    <Grid
-                        item
-                        xs={12}
-                        sm={6}
-                        md={4}
-                        xl={3}
-                        key={`char${index}`}
-                    >
+                    <Grid item xs={12} sm={6} md={4} xl={3} key={uuidv4()}>
                         <Card
                             onClick={() => {
                                 handleSearch(

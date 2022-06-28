@@ -13,6 +13,28 @@ class CharactersClient {
             });
     }
 
+    getMyChars() {
+        return axios
+            .get(`${CHAR_URI}/getMyCharacters`)
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => {
+                return error?.response?.data;
+            });
+    }
+
+    getAllUnactivateChars() {
+        return axios
+            .get(`${CHAR_URI}/getAllUnactivateCharacters`)
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => {
+                return error?.response?.data;
+            });
+    }
+
     getCommonChars() {
         return axios
             .get(`${CHAR_URI}/commonCharacters`)
@@ -38,6 +60,28 @@ class CharactersClient {
     uploadChar(formData) {
         return axios
             .post(`${CHAR_URI}/uploadCharacter`, { ...formData })
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => {
+                return error?.response?.data;
+            });
+    }
+
+    activeChar(id) {
+        return axios
+            .put(`${CHAR_URI}/activateCharacter/${id}`)
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => {
+                return error?.response?.data;
+            });
+    }
+
+    updateChar(id, formData) {
+        return axios
+            .put(`${CHAR_URI}/updateCharacter/${id}`, { ...formData })
             .then((response) => {
                 return response.data;
             })
