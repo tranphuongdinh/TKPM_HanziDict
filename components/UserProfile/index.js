@@ -12,6 +12,7 @@ import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Box from "@mui/material/Box";
+import { toast } from "react-toastify";
 
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
@@ -49,7 +50,7 @@ const UserProfile = () => {
   const [updateMode, setUpdateMode] = useState(false);
   const [email, setEmail] = useState("default@gmail.com");
   const [password, setPassword] = useState("xxxxxxxxxxxxx");
-  const [confirmedPassword, setConfirmedPassword] = useState("xxxxxxxxxxxxx");
+  const [newPassword, setnewPassword] = useState("xxxxxxxxxxxxx");
 
   const getUser = async () => {
     try {
@@ -65,35 +66,36 @@ const UserProfile = () => {
     getUser();
   }, []);
 
-  const schema = yup
-    .object({
-      password: yup.string().required("Mật khẩu không được để trống"),
-      confirmedPassword: yup
-        .string()
-        .oneOf([yup.ref("password"), null], "Xác nhận mật khẩu không đúng"),
-    })
-    .required();
-
+  const schema = yup.object({
+    password: yup.string().required("Mật khẩu không được để trống"),
+    newPassword: yup.string().required("Mật khẩu không được để trống"),
+  });
   const {
     formState: { errors },
     control,
     handleSubmit,
   } = useForm({ resolver: yupResolver(schema) });
 
-  const handleChangePassword = (data) => {
+  const handleChangePassword = async (data) => {
     if (!updateMode) {
       console.log("click to change password");
       setUpdateMode(true);
     } else {
       console.log("start save password");
       console.log(data);
-      if (password !== confirmedPassword) {
+      if (password !== newPassword) {
         console.log("error");
       } else {
-        setUpdateMode(false);
-
-        // const res = await getUserClient.updateUserInfo(newUser);
+        const res = await getUserClient().updateUserInfo(data);
+        if (res?.data?.message === "OK") {
+          toast.success("Đổi mật khẩu thành công");
+          return;
+        } else {
+          toast.error("Đã có lỗi xảy ras");
+        }
       }
+
+      setUpdateMode(false);
     }
   };
   const handleTypingPassword = () => {};
@@ -128,7 +130,7 @@ const UserProfile = () => {
                   helperText={errors?.password?.message}
                   className={styles.infoField}
                   id="password"
-                  label="Mật khẩu"
+                  label="Mật khẩu cũ"
                   variant="outlined"
                   type="password"
                   disabled={!updateMode}
@@ -138,15 +140,15 @@ const UserProfile = () => {
             />
 
             <Controller
-              name="confirmedPassword"
-              defaultValue={confirmedPassword}
+              name="newPassword"
+              defaultValue={newPassword}
               control={control}
               render={({ field }) => (
                 <TextField
                   className={styles.infoField}
-                  error={errors?.confirmedPassword}
-                  helperText={errors?.password?.confirmedPassword}
-                  label="Xác nhận mật khẩu"
+                  error={errors?.newPassword}
+                  helperText={errors?.password?.newPassword}
+                  label="Mật khẩu mới"
                   variant="outlined"
                   type="password"
                   disabled={!updateMode}
