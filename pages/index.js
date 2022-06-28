@@ -22,7 +22,13 @@ const Home = ({ data, popularCharacters }) => {
         if (searchChar) {
             router.push(`/characters/${searchChar._id}`);
         } else {
-            router.push(`/characters/notFound`);
+            router.push({
+                pathname: "/characters/not-found",
+                query: {
+                    chineseName,
+                    pinyin,
+                },
+            });
         }
     };
 

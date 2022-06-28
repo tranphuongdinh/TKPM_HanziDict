@@ -6,7 +6,7 @@ import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import NoSsr from "@mui/material/NoSsr";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
@@ -14,7 +14,7 @@ import FileUpload from "../FileUploader";
 import styles from "./styles.module.scss";
 import { getCharactersClient } from "/apis/getCharactersClient";
 
-const ContributionForm = () => {
+const ContributionForm = ({ defaultChar }) => {
     const schema = yup
         .object({
             pinyin: yup.string().required("Trường này là bắt buộc"),
@@ -27,12 +27,14 @@ const ContributionForm = () => {
         .required();
 
     const inputField = {
-        pinyin: "Pinyin",
-        chineseName: "Chữ Hán",
-        sino: "Từ Hán Việt",
-        mean: "Nghĩa",
-        deepMean: "Nghĩa mở rộng",
-        explain: "Giải thích",
+        pinyin: { label: "Pinyin" },
+        chineseName: {
+            label: "Chữ Hán",
+        },
+        sino: { label: "Từ Hán Việt" },
+        mean: { label: "Nghĩa" },
+        deepMean: { label: "Nghĩa mở rộng" },
+        explain: { label: "Giải thích" },
     };
 
     const {
@@ -40,7 +42,17 @@ const ContributionForm = () => {
         control,
         handleSubmit,
         reset,
-    } = useForm({ resolver: yupResolver(schema) });
+    } = useForm({
+        resolver: yupResolver(schema),
+        defaultValues: {
+            chineseName: defaultChar?.chineseName || "",
+            pinyin: defaultChar?.pinyin || "",
+            sino: defaultChar?.sino || "",
+            mean: defaultChar?.mean || "",
+            deepMean: defaultChar?.deepMean || "",
+            explain: defaultChar?.explain || "",
+        },
+    });
 
     const [images, setImages] = useState([]);
 
@@ -51,6 +63,10 @@ const ContributionForm = () => {
         };
 
         const res = await getCharactersClient().uploadChar(formData);
+        console.log(res);
+        if (res?.message === "OK") {
+            toast.success("Đóng góp kí tự thành công!");
+        }
     };
 
     const handleFileUploadError = (error) => {
@@ -60,6 +76,10 @@ const ContributionForm = () => {
     const handleFilesChange = (files) => {
         setImages(files);
     };
+
+    useEffect(() => {
+        reset({ ...defaultChar });
+    }, [defaultChar]);
 
     return (
         <Card sx={{ p: 2 }}>
@@ -79,15 +99,13 @@ const ContributionForm = () => {
                             >
                                 <Controller
                                     name={key}
-                                    defaultValue=""
                                     control={control}
                                     render={({ field }) => (
                                         <TextField
                                             sx={{ width: "100%" }}
                                             error={!!errors[key]}
-                                            label={inputField[key]}
+                                            label={inputField[key].label}
                                             multiline
-                                            defaultValue=""
                                             helperText={errors[key]?.message}
                                             {...field}
                                         />
