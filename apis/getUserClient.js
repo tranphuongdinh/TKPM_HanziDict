@@ -15,7 +15,7 @@ class UserClient {
 
     updateUserInfo(data) {
         return axios
-            .post(`${AUTH_URI}/updateUserInfo`, { ...data })
+            .put(`${AUTH_URI}/updateUserInfo`, { ...data })
             .then((response) => {
                 return response.data;
             })
