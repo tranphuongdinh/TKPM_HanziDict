@@ -1,4 +1,5 @@
 import MenuIcon from "@mui/icons-material/Menu";
+import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -39,7 +40,7 @@ const Header = () => {
     };
 
     const {
-        authState: { isAuthenticated },
+        authState: { isAuthenticated, user },
         authDispatch,
     } = React.useContext(AuthContext);
 
@@ -64,13 +65,13 @@ const Header = () => {
     ];
     const settings = [
         {
-            label: "Account",
+            label: "Tài khoản",
             event: () => {
                 router.push("/account");
             },
         },
         {
-            label: "Logout",
+            label: "Đăng xuất",
             event: () => {
                 authDispatch({
                     type: "LOGOUT",
@@ -198,15 +199,14 @@ const Header = () => {
 
                     {isAuthenticated ? (
                         <Box sx={{ flexGrow: 0 }}>
-                            <Tooltip title="Open settings">
+                            <Tooltip title={user?.email || "Settings"}>
                                 <IconButton
                                     onClick={handleOpenUserMenu}
                                     sx={{ p: 0 }}
                                 >
-                                    <Avatar
-                                        alt="Remy Sharp"
-                                        src="/static/images/avatar/2.jpg"
-                                    />
+                                    <Avatar alt={user?.email || "Avatar"}>
+                                        <PersonRoundedIcon />
+                                    </Avatar>
                                 </IconButton>
                             </Tooltip>
                             <Menu

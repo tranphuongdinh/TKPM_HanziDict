@@ -1,15 +1,40 @@
 import NextNProgress from "nextjs-progressbar";
+import { useContext, useEffect } from "react";
 import ScrollToTop from "react-scroll-to-top";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Footer from "./Footer";
+import Header from "./Header";
+import { getUserClient } from "/apis/getUserClient";
 import {
     PRIMARY_BACKGROUND_COLOR,
     PRIMARY_COLOR_HOVER,
 } from "/constants/style";
-import Footer from "./Footer";
-import Header from "./Header";
+import { AuthContext } from "/context/auth/auth.context";
 
 const AppLayout = ({ children }) => {
+    const {
+        authState: { isAuthenticated, user },
+        authDispatch,
+    } = useContext(AuthContext);
+
+    useEffect(() => {
+        const getUser = async () => {
+            if (isAuthenticated && !user) {
+                const res = await getUserClient().getUserInfo();
+                if (res?.success) {
+                    const userInfo = res.data;
+                    authDispatch({
+                        type: "UPDATE_USER",
+                        payload: userInfo,
+                    });
+                }
+            }
+        };
+
+        getUser();
+    }, []);
+
     return (
         <div>
             <NextNProgress color={PRIMARY_COLOR_HOVER} height={5} />

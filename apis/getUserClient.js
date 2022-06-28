@@ -1,10 +1,10 @@
 import axios from "./index";
-import { USER_URI } from "/constants/api";
+import { AUTH_URI } from "/constants/api";
 
 class UserClient {
     getUserInfo() {
         return axios
-            .post(`${USER_URI}/ThongTinNguoiDung`)
+            .get(`${AUTH_URI}/getUserInfo`)
             .then((response) => {
                 return response.data;
             })
@@ -13,20 +13,9 @@ class UserClient {
             });
     }
 
-    getAccountInfo() {
+    updateUserInfo(data) {
         return axios
-            .post(`${USER_URI}/ThongTinTaiKhoan`)
-            .then((response) => {
-                return response.data;
-            })
-            .catch((error) => {
-                return error;
-            });
-    }
-
-    updateUser(data) {
-        return axios
-            .put(`${USER_URI}/CapNhatThongTinNguoiDung`, { ...data })
+            .post(`${AUTH_URI}/updateUserInfo`, { ...data })
             .then((response) => {
                 return response.data;
             })

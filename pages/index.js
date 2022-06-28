@@ -20,9 +20,9 @@ const Home = ({ data, popularCharacters }) => {
         )[0];
 
         if (searchChar) {
-            router.push(`/${searchChar._id}`);
+            router.push(`/characters/${searchChar._id}`);
         } else {
-            router.push(`/notFound`);
+            router.push(`/characters/notFound`);
         }
     };
 
