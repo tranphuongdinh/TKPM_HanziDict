@@ -98,7 +98,6 @@ const UserProfile = () => {
       setUpdateMode(false);
     }
   };
-  const handleTypingPassword = () => {};
 
   return (
     <div className={styles.wapper}>
@@ -130,10 +129,15 @@ const UserProfile = () => {
                   helperText={errors?.password?.message}
                   className={styles.infoField}
                   id="password"
-                  label="Mật khẩu cũ"
+                  label="Mật khẩu"
                   variant="outlined"
                   type="password"
                   disabled={!updateMode}
+                  style={
+                    !updateMode
+                      ? { display: "none" }
+                      : { display: "inline-flex", width: "100%" }
+                  }
                   {...field}
                 />
               )}
@@ -162,7 +166,7 @@ const UserProfile = () => {
               )}
             />
           </Box>
-          <Box>
+          <Box sx={{ width: "100%", textAlign: "center" }}>
             <Button variant="contained" className="btnPrimary" type="submit">
               Đổi mật khẩu
             </Button>
