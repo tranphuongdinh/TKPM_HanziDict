@@ -130,12 +130,7 @@ export default function SignUpForm() {
         />
       </Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button
-          className="btnPrimary"
-          type="submit"
-          variant="contained"
-          sx={{ mt: 2 }}
-        >
+        <Button className="btnPrimary" variant="contained" sx={{ mt: 2 }}>
           Đăng ký
         </Button>
       </Box>

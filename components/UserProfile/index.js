@@ -9,7 +9,7 @@ import avatar from "/public/images/avatar.jpg";
 import { getUserClient } from "/apis/getUserClient";
 import { useState } from "react";
 import * as yup from "yup";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Box from "@mui/material/Box";
 
@@ -80,21 +80,23 @@ const UserProfile = () => {
     handleSubmit,
   } = useForm({ resolver: yupResolver(schema) });
 
-  const handleChangePassword = () => {
+  const handleChangePassword = (data) => {
     if (!updateMode) {
-      console.log("change password");
+      console.log("click to change password");
       setUpdateMode(true);
     } else {
+      console.log("start save password");
+      console.log(data);
       if (password !== confirmedPassword) {
         console.log("error");
       } else {
-        const newUser = {};
         setUpdateMode(false);
 
         // const res = await getUserClient.updateUserInfo(newUser);
       }
     }
   };
+  const handleTypingPassword = () => {};
 
   return (
     <div className={styles.wapper}>
@@ -105,45 +107,64 @@ const UserProfile = () => {
           component="form"
           noValidate
           autoComplete="off"
+          onSubmit={handleSubmit((data) => handleChangePassword(data))}
         >
-          <TextField
-            className={styles.infoField}
-            id="email"
-            label="Email"
-            variant="outlined"
-            value={email}
-            disabled
-          />
-          <TextField
-            className={styles.infoField}
-            id="password"
-            label="Mật khẩu"
-            variant="outlined"
-            type="text"
-            defaultValue={password}
-            disabled={!updateMode}
-          />
-          <TextField
-            className={styles.infoField}
-            id="confirmedPassword"
-            label="Xác nhận mật khẩu"
-            variant="outlined"
-            defaultValue={confirmedPassword}
-            disabled={!updateMode}
-            type="text"
-            style={
-              !updateMode
-                ? { display: "none" }
-                : { display: "inline-flex", width: "100%" }
-            }
-          />
-          <Button
-            variant="contained"
-            className="btnPrimary"
-            onClick={handleChangePassword}
-          >
-            Đổi mật khẩu
-          </Button>
+          <Box>
+            <TextField
+              className={styles.infoField}
+              id="email"
+              label="Email"
+              variant="outlined"
+              value={email}
+              disabled
+            />
+            <Controller
+              name="password"
+              defaultValue={password}
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  error={!!errors?.password}
+                  helperText={errors?.password?.message}
+                  className={styles.infoField}
+                  id="password"
+                  label="Mật khẩu"
+                  variant="outlined"
+                  type="password"
+                  disabled={!updateMode}
+                  {...field}
+                />
+              )}
+            />
+
+            <Controller
+              name="confirmedPassword"
+              defaultValue={confirmedPassword}
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  className={styles.infoField}
+                  error={errors?.confirmedPassword}
+                  helperText={errors?.password?.confirmedPassword}
+                  label="Xác nhận mật khẩu"
+                  variant="outlined"
+                  type="password"
+                  disabled={!updateMode}
+                  style={
+                    !updateMode
+                      ? { display: "none" }
+                      : { display: "inline-flex", width: "100%" }
+                  }
+                  {...field}
+                />
+              )}
+            />
+          </Box>
+          <Box>
+            <Button variant="contained" className="btnPrimary" type="submit">
+              Đổi mật khẩu
+            </Button>
+          </Box>
         </Box>
       </div>
       <div className={styles.contributedList}>
