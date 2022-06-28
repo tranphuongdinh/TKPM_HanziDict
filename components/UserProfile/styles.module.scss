@@ -31,3 +31,10 @@
         height: 400px;
     }
 }
+
+@media screen and (max-width: 480px) {
+    .avatar {
+        height: 150px !important;
+        width: 150px !important;
+    }
+}
