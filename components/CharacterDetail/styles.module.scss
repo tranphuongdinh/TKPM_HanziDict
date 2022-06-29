@@ -1,0 +1,62 @@
+.wapper {
+    .basicInfoWapper {
+        padding: 20px 40px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        .chineseCharacter {
+            width: 40%;
+            font-size: 100px;
+            text-align: center;
+            color: #0091a7
+        }
+        .basicInfo {
+            font-size: 20px;
+            width: 60%;
+            line-height: 40px;
+            .itemWapper {
+                display: flex;
+                gap: 20%
+            }
+            .item {
+                 :first-child {
+                    font-size: 18px;
+                    font-style: italic;
+                    margin-right: 5px;
+                }
+                 :last-child {
+                    font-size: 24px;
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+    .expandInfoWapper {
+        padding: 20px 40px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        .animation {
+            width: 40%;
+            text-align: center;
+            img {
+                border: 1px solid black;
+            }
+        }
+        .explain {
+            width: 60%;
+            line-height: 40px;
+             :first-child {
+                font-size: 18px;
+                font-style: italic;
+                margin-right: 5px;
+            }
+             :last-child {
+                font-size: 18px;
+                font-weight: 400;
+                text-align: justify;
+            }
+        }
+    }
+}
