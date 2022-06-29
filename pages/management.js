@@ -40,7 +40,7 @@ const Contribution = () => {
     }, []);
 
     return (
-        <Template title="Characters Management | Hanzi Dict">
+        <Template title="Quản lý từ | Hanzi Dict">
             {loading && <LoadingScreen />}
             {isAuthenticated ? (
                 <div>

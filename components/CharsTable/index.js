@@ -6,6 +6,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -22,7 +23,8 @@ export default function CharsTable({ data, type }) {
         setCharsData(data);
     }, [data]);
 
-    const handleUpdate = async (id, action) => {
+    const handleUpdate = async (character, action) => {
+        const id = character._id;
         setLoading(true);
         if (action === "DELETE") {
             const res = await getCharactersClient().deleteChar(id);
@@ -64,6 +66,7 @@ export default function CharsTable({ data, type }) {
                     <TableRow>
                         <TableCell align="center">Chữ Hán</TableCell>
                         <TableCell align="center">Pinyin</TableCell>
+                        <TableCell align="center">Hình Ảnh</TableCell>
                         <TableCell align="center">Thời điểm tải lên</TableCell>
                         <TableCell align="center">Trạng thái</TableCell>
                         <TableCell align="center">Thao tác</TableCell>
@@ -84,6 +87,21 @@ export default function CharsTable({ data, type }) {
                             </TableCell>
                             <TableCell align="center">{char.pinyin}</TableCell>
                             <TableCell align="center">
+                                {char.img.map((image) => (
+                                    <Image
+                                        width={40}
+                                        height={40}
+                                        style={{
+                                            margin: "0 10px",
+                                            display: "inline-block",
+                                        }}
+                                        key={uuidv4()}
+                                        src={image}
+                                        alt={char.chineseName}
+                                    />
+                                ))}
+                            </TableCell>
+                            <TableCell align="center">
                                 {new Date(char.timeUpload).toLocaleString()}
                             </TableCell>
                             <TableCell align="center">
@@ -96,10 +114,7 @@ export default function CharsTable({ data, type }) {
                                     <Button
                                         variant="contained"
                                         onClick={() => {
-                                            handleUpdate(
-                                                char._id,
-                                                "DEACTIVATE"
-                                            );
+                                            handleUpdate(char, "DEACTIVATE");
                                         }}
                                     >
                                         Hủy kích hoạt
@@ -108,7 +123,7 @@ export default function CharsTable({ data, type }) {
                                     <Button
                                         variant="contained"
                                         onClick={() => {
-                                            handleUpdate(char._id, "ACTIVATE");
+                                            handleUpdate(char, "ACTIVATE");
                                         }}
                                     >
                                         Kích hoạt
@@ -118,7 +133,7 @@ export default function CharsTable({ data, type }) {
                                     variant="contained"
                                     sx={{ ml: 2 }}
                                     onClick={() => {
-                                        handleUpdate(char._id, "DELETE");
+                                        handleUpdate(char, "DELETE");
                                     }}
                                 >
                                     Xóa
