@@ -8,249 +8,259 @@ import { toast } from "react-toastify";
 import * as yup from "yup";
 import styles from "./styles.module.scss";
 import { getUserClient } from "/apis/getUserClient";
+import { getCharactersClient } from "/apis/getCharactersClient";
 
 const columns = [
-    { field: "id", headerName: "ID", width: 70 },
-    { field: "firstName", headerName: "First name", width: 130 },
-    { field: "lastName", headerName: "Last name", width: 130 },
-    {
-        field: "age",
-        headerName: "Age",
-        type: "number",
-        width: 90,
-    },
-    {
-        field: "fullName",
-        headerName: "Full name",
-        description: "This column has a value getter and is not sortable.",
-        sortable: false,
-        width: 160,
-        valueGetter: (params) =>
-            `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-    },
+  { field: "id", headerName: "STT", width: 90 },
+  { field: "chineseName", headerName: "Từ", width: 130 },
+  { field: "pinyin", headerName: "Pinyin", width: 150 },
+  {
+    field: "date",
+    headerName: "date",
+    type: "dateTime",
+    width: 180,
+  },
+  {
+    field: "status",
+    headerName: "Trạng thái",
+    type: "boolean",
+    width: 90,
+  },
 ];
 
-const rows = [
-    { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-    { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-    { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-    { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-    { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-    { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-    { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-    { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-    { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-];
+const mapListToRows = (contributedList) => {
+  return contributedList.map((item, index) => {
+    return {
+      id: index + 1,
+      chineseName: item.chineseName,
+      pinyin: item.pinyin,
+      date: new Date(item.timeUpload).toLocaleString(),
+      status: item.isActive,
+    };
+  });
+};
 const UserProfile = () => {
-    const [updateMode, setUpdateMode] = useState(false);
-    const [email, setEmail] = useState("default@gmail.com");
+  const [updateMode, setUpdateMode] = useState(false);
+  const [email, setEmail] = useState("default@gmail.com");
+  const [contributedList, setContributedList] = useState([]);
+  const [rows, setRows] = useState([]);
+  const getUser = async () => {
+    try {
+      const res = await getUserClient().getUserInfo();
+      const tmp = await getCharactersClient().getMyChars();
 
-    const getUser = async () => {
-        try {
-            const res = await getUserClient().getUserInfo();
-            setEmail(res.data.email);
-        } catch (error) {}
-    };
-    useEffect(() => {
-        getUser();
-    }, []);
+      if (!!tmp.success) {
+        setContributedList(tmp.characters);
+        const newRw = mapListToRows(contributedList);
+        setRows(newRw);
+      }
 
-    const schema = yup
-        .object({
-            password: yup.string().required("Mật khẩu không được để trống"),
-            newPassword: yup.string().required("Mật khẩu không được để trống"),
-            confirmedNewPassword: yup
-                .string()
-                .oneOf(
-                    [yup.ref("newPassword"), null],
-                    "Xác nhận mật khẩu không đúng"
-                ),
-        })
-        .required();
-    const {
-        formState: { errors },
-        control,
-        handleSubmit,
-    } = useForm({ resolver: yupResolver(schema) });
+      setEmail(res.data.email);
+    } catch (error) {}
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
 
-    const handleChangePassword = async (data) => {
-        if (!updateMode) {
-            setUpdateMode(true);
-        } else {
-            const formData = {
-                password: data.password,
-                newPassword: data.newPassword,
-            };
-            const res = await getUserClient().updateUserInfo(formData);
-            if (res?.message === "OK") {
-                toast.success("Đổi mật khẩu thành công");
-            } else {
-                toast.error(
-                    "Đã có lỗi xảy ra hoặc mật khẩu hiện tại không đúng"
-                );
-            }
-            setUpdateMode(false);
-        }
-    };
+  const schema = yup
+    .object({
+      password: yup.string().required("Mật khẩu không được để trống"),
+      newPassword: yup.string().required("Mật khẩu không được để trống"),
+      confirmedNewPassword: yup
+        .string()
+        .oneOf([yup.ref("newPassword"), null], "Xác nhận mật khẩu không đúng"),
+    })
+    .required();
+  const {
+    formState: { errors },
+    control,
+    handleSubmit,
+  } = useForm({ resolver: yupResolver(schema) });
 
-    const handleChangeMode = (mode) => {
-        setUpdateMode(mode);
-    };
+  const handleChangePassword = async (data) => {
+    if (!updateMode) {
+      setUpdateMode(true);
+    } else {
+      const formData = {
+        password: data.password,
+        newPassword: data.newPassword,
+      };
+      const res = await getUserClient().updateUserInfo(formData);
+      if (res?.message === "OK") {
+        toast.success("Đổi mật khẩu thành công");
+      } else {
+        toast.error("Đã có lỗi xảy ra hoặc mật khẩu hiện tại không đúng");
+      }
+      setUpdateMode(false);
+    }
+  };
 
-    return (
-        <div className={styles.wapper}>
-            <div className={styles.profile}>
-                <Avatar className={styles.avatar} src="" alt="" />
-                <Box
-                    className={styles.info}
-                    component="form"
-                    noValidate
-                    autoComplete="off"
-                    onSubmit={handleSubmit((data) =>
-                        handleChangePassword(data)
-                    )}
-                >
-                    <Box>
-                        <TextField
-                            className={styles.infoField}
-                            id="email"
-                            label="Email"
-                            variant="outlined"
-                            value={email}
-                            disabled
-                        />
-                        <Controller
-                            name="password"
-                            defaultValue=""
-                            control={control}
-                            render={({ field }) => (
-                                <TextField
-                                    error={!!errors?.password}
-                                    helperText={errors?.password?.message}
-                                    className={styles.infoField}
-                                    label="Mật khẩu cũ"
-                                    variant="outlined"
-                                    type="password"
-                                    disabled={!updateMode}
-                                    style={
-                                        !updateMode
-                                            ? { display: "none" }
-                                            : {
-                                                  display: "inline-flex",
-                                                  width: "100%",
-                                              }
-                                    }
-                                    {...field}
-                                />
-                            )}
-                        />
+  const handleChangeMode = (mode) => {
+    setUpdateMode(mode);
+  };
 
-                        <Controller
-                            name="newPassword"
-                            defaultValue=""
-                            control={control}
-                            render={({ field }) => (
-                                <TextField
-                                    className={styles.infoField}
-                                    error={!!errors?.newPassword}
-                                    helperText={errors?.newPassword?.message}
-                                    label="Mật khẩu mới"
-                                    variant="outlined"
-                                    type="password"
-                                    disabled={!updateMode}
-                                    style={
-                                        !updateMode
-                                            ? { display: "none" }
-                                            : {
-                                                  display: "inline-flex",
-                                                  width: "100%",
-                                              }
-                                    }
-                                    {...field}
-                                />
-                            )}
-                        />
-                        <Controller
-                            name="confirmedNewPassword"
-                            defaultValue=""
-                            control={control}
-                            render={({ field }) => (
-                                <TextField
-                                    className={styles.infoField}
-                                    error={!!errors?.confirmedNewPassword}
-                                    helperText={
-                                        errors?.confirmedNewPassword?.message
-                                    }
-                                    label="Xác nhận mật khẩu mới"
-                                    variant="outlined"
-                                    type="password"
-                                    disabled={!updateMode}
-                                    style={
-                                        !updateMode
-                                            ? { display: "none" }
-                                            : {
-                                                  display: "inline-flex",
-                                                  width: "100%",
-                                              }
-                                    }
-                                    {...field}
-                                />
-                            )}
-                        />
-                    </Box>
-                    <Box sx={{ width: "100%", textAlign: "center" }}>
-                        {!updateMode && (
-                            <Button
-                                variant="contained"
-                                className="btnPrimary"
-                                type="button"
-                                sx={{ marginRight: "20px" }}
-                                onClick={() => {
-                                    handleChangeMode(true);
-                                }}
-                            >
-                                Đổi mật khẩu
-                            </Button>
-                        )}
-                        {updateMode && (
-                            <Button
-                                variant="contained"
-                                className="btnPrimary"
-                                type="submit"
-                                sx={{ marginRight: "20px" }}
-                            >
-                                Lưu thay đổi
-                            </Button>
-                        )}
-                        <Button
-                            variant="contained"
-                            className="btnLightPrimiary"
-                            type="button"
-                            onClick={() => {
-                                handleChangeMode(false);
-                            }}
-                            sx={
-                                updateMode
-                                    ? { display: "inline-flex" }
-                                    : { display: "none" }
-                            }
-                        >
-                            Hủy
-                        </Button>
-                    </Box>
-                </Box>
-            </div>
-            <div className={styles.contributedList}>
-                <DataGrid
-                    rows={rows}
-                    columns={columns}
-                    pageSize={5}
-                    rowsPerPageOptions={[5]}
-                    checkboxSelection
+  return (
+    <div className={styles.wapper}>
+      <div className={styles.profile}>
+        <Avatar
+          className={styles.avatar}
+          src="https://play-lh.googleusercontent.com/UxsPqACDJDGp0vSYpvnmXNffVB_AkXgQ6Q0Y2S9k_KjTGumj59rGSDinMiYNWewE5-o"
+          alt=""
+        />
+        <Box
+          className={styles.info}
+          component="form"
+          noValidate
+          autoComplete="off"
+          onSubmit={handleSubmit((data) => handleChangePassword(data))}
+        >
+          <Box>
+            <TextField
+              className={styles.infoField}
+              id="email"
+              label="Email"
+              variant="outlined"
+              value={email}
+              disabled
+            />
+            <Controller
+              name="password"
+              defaultValue=""
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  error={!!errors?.password}
+                  helperText={errors?.password?.message}
+                  className={styles.infoField}
+                  label="Mật khẩu cũ"
+                  variant="outlined"
+                  type="password"
+                  disabled={!updateMode}
+                  style={
+                    !updateMode
+                      ? { display: "none" }
+                      : {
+                          display: "inline-flex",
+                          width: "100%",
+                        }
+                  }
+                  {...field}
                 />
-            </div>
-        </div>
-    );
+              )}
+            />
+
+            <Controller
+              name="newPassword"
+              defaultValue=""
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  className={styles.infoField}
+                  error={!!errors?.newPassword}
+                  helperText={errors?.newPassword?.message}
+                  label="Mật khẩu mới"
+                  variant="outlined"
+                  type="password"
+                  disabled={!updateMode}
+                  style={
+                    !updateMode
+                      ? { display: "none" }
+                      : {
+                          display: "inline-flex",
+                          width: "100%",
+                        }
+                  }
+                  {...field}
+                />
+              )}
+            />
+            <Controller
+              name="confirmedNewPassword"
+              defaultValue=""
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  className={styles.infoField}
+                  error={!!errors?.confirmedNewPassword}
+                  helperText={errors?.confirmedNewPassword?.message}
+                  label="Xác nhận mật khẩu mới"
+                  variant="outlined"
+                  type="password"
+                  disabled={!updateMode}
+                  style={
+                    !updateMode
+                      ? { display: "none" }
+                      : {
+                          display: "inline-flex",
+                          width: "100%",
+                        }
+                  }
+                  {...field}
+                />
+              )}
+            />
+          </Box>
+          <Box sx={{ width: "100%", textAlign: "center" }}>
+            {!updateMode && (
+              <Button
+                variant="contained"
+                className="btnPrimary"
+                type="button"
+                sx={{ marginRight: "20px" }}
+                onClick={() => {
+                  handleChangeMode(true);
+                }}
+              >
+                Đổi mật khẩu
+              </Button>
+            )}
+            {updateMode && (
+              <Button
+                variant="contained"
+                className="btnPrimary"
+                type="submit"
+                sx={{ marginRight: "20px" }}
+              >
+                Lưu thay đổi
+              </Button>
+            )}
+            {updateMode && (
+              <Button
+                variant="contained"
+                className="btnLightPrimiary"
+                type="button"
+                onClick={() => {
+                  handleChangeMode(false);
+                }}
+              >
+                Hủy
+              </Button>
+            )}
+          </Box>
+        </Box>
+      </div>
+
+      <div className={styles.contributedList}>
+        <h2>Danh sách các từ đóng góp</h2>
+
+        {rows.length !== 0 ? (
+          <>
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+              sx={{
+                padding: 2,
+              }}
+            />
+          </>
+        ) : (
+          <span>Chưa có đóng góp</span>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default UserProfile;

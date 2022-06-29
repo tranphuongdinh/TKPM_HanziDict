@@ -15,30 +15,34 @@ const Contribution = () => {
 
     const defaultChar = { chineseName, pinyin };
 
-    return (
-        <Template title="Contribution | Hanzi Dict">
-            <Typography
-                gutterBottom
-                variant="h5"
-                component="div"
-                sx={{ fontWeight: "bold" }}
-            >
-                Đóng góp chiết tự
-            </Typography>
-            {isAuthenticated ? (
-                <ContributionForm
-                    defaultChar={{ ...defaultChar }}
-                ></ContributionForm>
-            ) : (
-                <Typography
-                    variant="h6"
-                    component="div"
-                    sx={{ fontWeight: "bold" }}
-                >
-                    Vui lòng đăng nhập để thực hiện chức năng này
-                </Typography>
-            )}
-        </Template>
+    return ( <
+        Template title = "Contribution | Hanzi Dict" >
+        <
+        Typography gutterBottom variant = "h5"
+        component = "div"
+        sx = {
+            { fontWeight: "bold" } } >
+        Đóng góp chiết tự <
+        /Typography> {
+            isAuthenticated ? ( <
+                ContributionForm defaultChar = {
+                    {...defaultChar } } > < /ContributionForm>
+            ) : ( <
+                Typography variant = "h6"
+                component = "div"
+                sx = {
+                    {
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        height: "30vw",
+                        marginTop: 5,
+                    }
+                } >
+                Vui lòng đăng nhập để thực hiện chức năng này <
+                /Typography>
+            )
+        } <
+        /Template>
     );
 };
 
