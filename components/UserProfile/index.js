@@ -2,13 +2,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Avatar, Button, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
+import { string } from "prop-types";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import styles from "./styles.module.scss";
 import { getUserClient } from "/apis/getUserClient";
-import avatar from "/public/images/avatar.jpg";
 
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
@@ -45,32 +45,26 @@ const rows = [
 const UserProfile = () => {
   const [updateMode, setUpdateMode] = useState(false);
   const [email, setEmail] = useState("default@gmail.com");
-  const [password, setPassword] = useState("xxxxxxxxxxxxx");
-  const [newPassword, setnewPassword] = useState("xxxxxxxxxxxxx");
-  const [confirmedNewPassword, setConfirmedNewPassword] =
-    useState("xxxxxxxxxxxxx");
 
   const getUser = async () => {
     try {
       const res = await getUserClient().getUserInfo();
-      console.log("success", res);
       setEmail(res.data.email);
-    } catch (error) {
-      console.log("error", error);
-    }
+    } catch (error) {}
   };
   useEffect(() => {
-    console.log("get user");
     getUser();
   }, []);
 
-  const schema = yup.object({
-    password: yup.string().required("Mật khẩu không được để trống"),
-    newPassword: yup.string().required("Mật khẩu không được để trống"),
-    confirmedNewPassword: yup
-      .string()
-      .oneOf([yup.ref("newPassword"), null], "Xác nhận mật khẩu không đúng"),
-  });
+  const schema = yup
+    .object({
+      password: yup.string().required("Mật khẩu không được để trống"),
+      newPassword: yup.string().required("Mật khẩu không được để trống"),
+      confirmedNewPassword: yup
+        .string()
+        .oneOf([yup.ref("newPassword"), null], "Xác nhận mật khẩu không đúng"),
+    })
+    .required();
   const {
     formState: { errors },
     control,
@@ -81,25 +75,13 @@ const UserProfile = () => {
     if (!updateMode) {
       setUpdateMode(true);
     } else {
-      console.log(data);
-      if (password !== newPassword) {
-        console.log("error");
+      delete data["confirmedNewPassword"];
+      const res = await getUserClient().updateUserInfo(data);
+      if (res?.message === "OK") {
+        toast.success("Đổi mật khẩu thành công");
       } else {
-        delete data["confirmedNewPassword"];
-        console.log("confirmedNewPassword");
-
-        console.log(data);
-
-        const res = await getUserClient().updateUserInfo(data);
-        console.log(res);
-        if (res?.message === "OK") {
-          toast.success("Đổi mật khẩu thành công");
-          return;
-        } else {
-          toast.error("Đã có lỗi xảy ra hoặc mật khẩu hiện tại không đúng");
-        }
+        toast.error("Đã có lỗi xảy ra hoặc mật khẩu hiện tại không đúng");
       }
-
       setUpdateMode(false);
     }
   };
@@ -109,10 +91,13 @@ const UserProfile = () => {
     }
     return "Đổi mật khẩu";
   };
+  const handleCancel = () => {
+    setUpdateMode(false);
+  };
   return (
     <div className={styles.wapper}>
       <div className={styles.profile}>
-        <Avatar className={styles.avatar} src={avatar} alt="" />
+        <Avatar className={styles.avatar} src="" alt="" />
         <Box
           className={styles.info}
           component="form"
@@ -131,15 +116,14 @@ const UserProfile = () => {
             />
             <Controller
               name="password"
-              defaultValue={password}
+              defaultValue=" "
               control={control}
               render={({ field }) => (
                 <TextField
                   error={!!errors?.password}
                   helperText={errors?.password?.message}
                   className={styles.infoField}
-                  id="password"
-                  label="Mật khẩu"
+                  label="Mật khẩu cũ"
                   variant="outlined"
                   type="password"
                   disabled={!updateMode}
@@ -158,13 +142,13 @@ const UserProfile = () => {
 
             <Controller
               name="newPassword"
-              defaultValue={newPassword}
+              defaultValue=" "
               control={control}
               render={({ field }) => (
                 <TextField
                   className={styles.infoField}
-                  error={errors?.newPassword}
-                  helperText={errors?.password?.newPassword}
+                  error={!!errors?.newPassword}
+                  helperText={errors?.newPassword?.message}
                   label="Mật khẩu mới"
                   variant="outlined"
                   type="password"
@@ -183,13 +167,13 @@ const UserProfile = () => {
             />
             <Controller
               name="confirmedNewPassword"
-              defaultValue={confirmedNewPassword}
+              defaultValue=" "
               control={control}
               render={({ field }) => (
                 <TextField
                   className={styles.infoField}
-                  error={errors?.confirmedNewPassword}
-                  helperText={errors?.password?.confirmedNewPassword}
+                  error={!!errors?.confirmedNewPassword}
+                  helperText={errors?.confirmedNewPassword?.message}
                   label="Xác nhận mật khẩu mới"
                   variant="outlined"
                   type="password"
@@ -208,8 +192,22 @@ const UserProfile = () => {
             />
           </Box>
           <Box sx={{ width: "100%", textAlign: "center" }}>
-            <Button variant="contained" className="btnPrimary" type="submit">
+            <Button
+              variant="contained"
+              className="btnPrimary"
+              type="submit"
+              sx={{ marginRight: "20px" }}
+            >
               {mapButtonString()}
+            </Button>
+            <Button
+              variant="contained"
+              className="btnLightPrimiary"
+              type="button"
+              onClick={handleCancel}
+              sx={updateMode ? { display: "inline-flex" } : { display: "none" }}
+            >
+              Hủy
             </Button>
           </Box>
         </Box>
