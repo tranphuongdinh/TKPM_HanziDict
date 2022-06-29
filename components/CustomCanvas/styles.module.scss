@@ -3,6 +3,27 @@
     padding: 20px;
     overflow-x: hidden;
     box-sizing: border-box;
+    position: relative;
+
+    .charToWrite {
+        position: absolute;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 300px;
+        color: #000;
+        font-weight: 400;
+        opacity: 0.1;
+        width: calc(100% - 70px);
+        text-align: center;
+        overflow: hidden;
+
+        @media (max-width: 800px) {
+            top: 50px;
+            font-size: 200px;
+        }
+    }
+
     .canvasSupport {
         width: 100%;
         margin-top: 20px;

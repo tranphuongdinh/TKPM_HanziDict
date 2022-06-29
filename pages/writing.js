@@ -3,7 +3,7 @@ import Template from "/containers/Template";
 
 const Writing = () => {
     return (
-        <Template title="Writing | Hanzi Dict">
+        <Template title="Luyện viết | Hanzi Dict">
             <CustomCanvas />
         </Template>
     );

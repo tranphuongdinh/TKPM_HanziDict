@@ -4,22 +4,13 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
-import { getCharactersClient } from "/apis/getCharactersClient";
+import { toast } from "react-toastify";
 
 export default function SearchBar({ allChars, handleSearch }) {
+    console.log(allChars);
     const [searchText, setSearchText] = useState("");
-    const [prefix, setPrefix] = useState([]);
-    const [loading, setLoading] = useState(false);
 
-    const handleChangeText = async (e) => {
-        setLoading(true);
-        const text = e.target.value;
-        const prefixFetch = await getCharactersClient().search(text);
-        setPrefix(prefixFetch?.searchResults || []);
-        setLoading(false);
-    };
-
-    const handleBlurText = async (e) => {
+    const handleChangeText = (e) => {
         setSearchText(e.target.value);
     };
 
@@ -31,13 +22,12 @@ export default function SearchBar({ allChars, handleSearch }) {
                 id="free-solo-2-demo"
                 disableClearable
                 options={
-                    prefix && prefix.length > 0
-                        ? prefix.map(
-                              (pre) => `${pre.simplified} - ${pre.pinyin}`
-                          )
+                    allChars?.length > 0
+                        ? allChars.map((char) => {
+                              return `${char.chineseName} - ${char.pinyin}`;
+                          })
                         : []
                 }
-                loading={loading}
                 renderInput={(params) => (
                     <TextField
                         {...params}
@@ -47,14 +37,23 @@ export default function SearchBar({ allChars, handleSearch }) {
                             type: "search",
                         }}
                         onChange={handleChangeText}
-                        onBlur={handleBlurText}
+                        onBlur={handleChangeText}
+                        onKeyUp={(e) => {
+                            if (e.key === "Enter") {
+                                handleSearch(searchText, allChars);
+                            }
+                        }}
                     />
                 )}
             />
 
             <IconButton
                 onClick={() => {
-                    handleSearch(searchText, allChars);
+                    if (!searchText) {
+                        toast.info("Vui lòng nhập kí tự cần tra cứu");
+                    } else {
+                        searchText && handleSearch(searchText, allChars);
+                    }
                 }}
                 sx={{ ml: 2, width: 50, height: 50 }}
             >

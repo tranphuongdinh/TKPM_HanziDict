@@ -2,7 +2,7 @@ import AutoFixNormalIcon from "@mui/icons-material/AutoFixNormal";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from "@mui/icons-material/Save";
 import UndoIcon from "@mui/icons-material/Undo";
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import Card from "@mui/material/Card";
 import { saveAs } from "file-saver";
 import Image from "next/image";
@@ -13,6 +13,7 @@ import InputRange from "react-input-range";
 import "react-input-range/lib/css/index.css";
 import styles from "./styles.module.scss";
 const CustomCanvas = () => {
+    const [writeChar, setWriteChar] = useState("");
     const defaultProps = {
         onChange: null,
         loadTimeOffset: 5,
@@ -66,6 +67,17 @@ const CustomCanvas = () => {
 
     return (
         <div className={styles.canvasWrapper} ref={wrapperRef}>
+            <TextField
+                id="outlined-basic"
+                label="Nhập từ để viết"
+                variant="outlined"
+                value={writeChar}
+                sx={{ background: "fff", mb: 2 }}
+                onChange={(e) => {
+                    setWriteChar(e.target.value);
+                }}
+            />
+            {writeChar && <div className={styles.charToWrite}>{writeChar}</div>}
             <CanvasDraw
                 ref={(canvasDraw) => (saveableCanvas = canvasDraw)}
                 {...defaultProps}
