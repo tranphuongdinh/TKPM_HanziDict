@@ -1,5 +1,11 @@
 .wapper {
+    width: calc(100% - 60px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     .basicInfoWapper {
+        width: 100%;
         padding: 20px 40px;
         display: flex;
         flex-direction: row;
@@ -40,22 +46,91 @@
         .animation {
             width: 40%;
             text-align: center;
+            padding: 30px;
             img {
+                width: 100%;
                 border: 1px solid black;
             }
         }
         .explain {
             width: 60%;
+            font-size: 18px;
+            padding: 20px;
             line-height: 40px;
              :first-child {
-                font-size: 18px;
                 font-style: italic;
                 margin-right: 5px;
             }
              :last-child {
-                font-size: 18px;
                 font-weight: 400;
                 text-align: justify;
+            }
+        }
+    }
+    @media screen and (max-width: 992px) {
+        .expandInfoWapper {
+            .animation {
+                padding: 10px;
+            }
+            .explain {
+                line-height: 38px;
+                font-size: 16px;
+            }
+        }
+    }
+    @media screen and (max-width: 768px) {
+        .basicInfoWapper {
+            padding: 0;
+            .chineseCharacter {
+                font-size: 70px;
+            }
+            .basicInfo {
+                font-size: 16px;
+                .itemWapper {
+                    gap: 20px;
+                }
+                .item {
+                     :first-child {
+                        font-size: 16px;
+                    }
+                     :last-child {
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+        .expandInfoWapper {
+            flex-direction: column;
+            .animation {
+                width: 100%;
+            }
+            .explain {
+                width: 100%;
+            }
+        }
+    }
+    @media screen and (max-width: 480px) {
+        .basicInfoWapper {
+            .chineseCharacter {
+                font-size: 50px;
+            }
+            .itemWapper {
+                flex-direction: column;
+                gap: 0px !important;
+            }
+            .basicInfo {
+                font-size: 14px;
+                .itemWapper {
+                    gap: 5px;
+                }
+                .item {
+                     :first-child {
+                        font-size: 16px;
+                    }
+                     :last-child {
+                        font-size: 16px;
+                    }
+                }
             }
         }
     }
