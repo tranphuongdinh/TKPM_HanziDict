@@ -68,9 +68,20 @@ class CharactersClient {
             });
     }
 
-    activeChar(id) {
+    activateChar(id) {
         return axios
             .put(`${CHAR_URI}/activateCharacter/${id}`)
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => {
+                return error?.response?.data;
+            });
+    }
+
+    deleteChar(id) {
+        return axios
+            .put(`${CHAR_URI}/deleteCharacter/${id}`)
             .then((response) => {
                 return response.data;
             })

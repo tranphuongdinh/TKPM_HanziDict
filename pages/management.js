@@ -44,8 +44,17 @@ const Contribution = () => {
             {loading && <LoadingScreen />}
             {isAuthenticated ? (
                 <div>
-                    <CharsTable data={[...activatedChars]} />
-                    <CharsTable data={[...unactivatedChars]} />
+                    <Typography variant="h5" sx={{ mb: 3 }}>
+                        Danh sách các từ đã kích hoạt
+                    </Typography>
+                    <CharsTable data={[...activatedChars]} type="ACTIVATE" />
+                    <Typography variant="h5" sx={{ mt: 10, mb: 3 }}>
+                        Danh sách các từ chưa kích hoạt
+                    </Typography>
+                    <CharsTable
+                        data={[...unactivatedChars]}
+                        type="DEACTIVATE"
+                    />
                 </div>
             ) : (
                 <Typography

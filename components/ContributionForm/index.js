@@ -6,14 +6,39 @@ import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import NoSsr from "@mui/material/NoSsr";
 import TextField from "@mui/material/TextField";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import * as yup from "yup";
+import { storage } from "../../firebase";
 import FileUpload from "../FileUploader";
 import styles from "./styles.module.scss";
 import { getCharactersClient } from "/apis/getCharactersClient";
+import LoadingScreen from "/components/LoadingScreen";
+
+function dataURLtoFile(dataurl, filename) {
+    var arr = dataurl.split(","),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]),
+        n = bstr.length,
+        u8arr = new Uint8Array(n);
+
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], filename, { type: mime });
+}
+
+const uploadImageToFirebase = async (file) => {
+    const imageRef = ref(storage, `images/${uuidv4()}-${file.name}`);
+    const fileToUpload = dataURLtoFile(file.path, file.name);
+    await uploadBytes(imageRef, fileToUpload);
+    const url = await getDownloadURL(imageRef);
+    return url;
+};
 
 const ContributionForm = ({ defaultChar }) => {
     const schema = yup
@@ -55,23 +80,32 @@ const ContributionForm = ({ defaultChar }) => {
         },
     });
 
+    const [loading, setLoading] = useState(false);
     const [images, setImages] = useState([]);
 
     const handleUpload = async (data) => {
+        setLoading(true);
+        const imageUrls = await Promise.all(
+            images.map((image) => uploadImageToFirebase(image))
+        );
+
         const formData = {
             ...data,
-            images,
+            images: imageUrls,
         };
 
         const res = await getCharactersClient().uploadChar(formData);
-        console.log(res);
+        setLoading(false);
+
         if (res?.message === "OK") {
-            toast.success("Đóng góp kí tự thành công!");
+            toast.success("Đóng góp chiết tự thành công!");
+        } else {
+            toast.error("Có lỗi xảy ra!");
         }
     };
 
     const handleFileUploadError = (error) => {
-        toast.error(error);
+        toast.error(`Có lỗi xảy ra khi tải file: ${error}`);
     };
 
     const handleFilesChange = (files) => {
@@ -84,6 +118,7 @@ const ContributionForm = ({ defaultChar }) => {
 
     return (
         <Card sx={{ p: 2 }}>
+            {loading && <LoadingScreen />}
             <form
                 className={styles.formWrapper}
                 onSubmit={handleSubmit((data) => handleUpload(data))}
