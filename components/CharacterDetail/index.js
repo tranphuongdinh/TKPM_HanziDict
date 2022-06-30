@@ -20,7 +20,6 @@ export const CharacterDetail = ({ data }) => {
     useEffect(() => {
         const interval = setInterval(() => {
             changeImage();
-            console.log(image.index);
         }, 1000);
         return () => {
             clearInterval(interval);

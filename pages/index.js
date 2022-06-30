@@ -1,15 +1,17 @@
+import { Box } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Image from "next/image";
 import { useRouter } from "next/router";
+import Slider from "react-slick";
 import { v4 as uuidv4 } from "uuid";
 import { PRIMARY_COLOR } from "../constants/style";
 import { shuffle, stringToSlug } from "../utils/index";
 import { getCharactersClient } from "/apis/getCharactersClient";
 import Searchbar from "/components/Searchbar";
 import Template from "/containers/Template";
-
 const Home = ({ data }) => {
     const router = useRouter();
 
@@ -40,12 +42,40 @@ const Home = ({ data }) => {
         }
     };
 
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 1500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        arrows: false,
+    };
+
     return (
-        <Template title="Trang chủ | Hanzi Dict">
+        <Template title="Tra cứu | Hanzi Dict">
             <Searchbar
                 allChars={data?.characters || []}
                 handleSearch={handleSearch}
             ></Searchbar>
+
+            <Slider {...settings} style={{ margin: "40px 0 60px 0" }}>
+                {Array.from(Array(8).keys()).map((i) => (
+                    <Box key={uuidv4()} className="slider-item-home">
+                        <Image
+                            priority
+                            src={`/images/slider-image-${i + 1}.webp`}
+                            layout="fill"
+                            alt={`image-slider-${i}`}
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                borderRadius: 5,
+                            }}
+                        />
+                    </Box>
+                ))}
+            </Slider>
 
             <Typography
                 sx={{
@@ -53,13 +83,13 @@ const Home = ({ data }) => {
                     fontWeight: "bold",
                     color: PRIMARY_COLOR,
                     mb: 3,
-                    mt: 5,
+                    mt: 10,
                 }}
                 variant="h4"
             >
                 CÁC TỪ PHỔ BIẾN
             </Typography>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} justifyContent="center">
                 {shuffleIndex.map((i) => {
                     const char = data.characters[i];
                     return (
@@ -120,7 +150,6 @@ export async function getServerSideProps(ctx) {
             },
         };
     } catch (e) {
-        console.log(e);
         return {
             props: {
                 data: {

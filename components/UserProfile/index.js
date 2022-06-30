@@ -109,7 +109,7 @@ const UserProfile = () => {
             <div className={styles.profile}>
                 <Avatar
                     className={styles.avatar}
-                    src="https://play-lh.googleusercontent.com/UxsPqACDJDGp0vSYpvnmXNffVB_AkXgQ6Q0Y2S9k_KjTGumj59rGSDinMiYNWewE5-o"
+                    src="/images/avatar-cute.png"
                     alt=""
                 />
                 <Box
