@@ -11,117 +11,119 @@ import Searchbar from "/components/Searchbar";
 import Template from "/containers/Template";
 
 const Home = ({ data }) => {
-    const router = useRouter();
+  const router = useRouter();
 
-    const shuffleIndex = shuffle(
-        Array.from(Array(data.characters.length).keys())
-    ).slice(0, 10);
+  const shuffleIndex = shuffle(
+    Array.from(Array(data.characters.length).keys())
+  ).slice(0, 10);
 
-    const handleSearch = async (searchText, allChars) => {
-        const searchChar = allChars.filter((char) => {
-            const mergedString = `${char.chineseName} - ${stringToSlug(
-                char.pinyin
-            )}`;
-            return mergedString.includes(stringToSlug(searchText));
-        })[0];
+  const handleSearch = async (searchText, allChars) => {
+    const searchChar = allChars.filter((char) => {
+      const mergedString = `${char.chineseName} - ${stringToSlug(char.pinyin)}`;
+      return mergedString.includes(stringToSlug(searchText));
+    })[0];
 
-        if (searchChar) {
-            router.push(`/characters/${searchChar._id}`);
-        } else {
-            router.push({
-                pathname: "/characters/not-found",
-                query: {
-                    searchText,
-                },
-            });
-        }
-    };
+    if (searchChar) {
+      router.push(`/characters/${searchChar._id}`);
+    } else {
+      router.push({
+        pathname: "/characters/not-found",
+        query: {
+          searchText,
+        },
+      });
+    }
+  };
 
-    return (
-        <Template title="Trang chủ | Hanzi Dict">
-            <Searchbar
-                allChars={data?.characters || []}
-                handleSearch={handleSearch}
-            ></Searchbar>
+  return (
+    <Template title="Trang chủ | Hanzi Dict">
+      <Searchbar
+        allChars={data?.characters || []}
+        handleSearch={handleSearch}
+      ></Searchbar>
 
-            <Typography
-                sx={{
-                    textAlign: "center",
-                    fontWeight: "bold",
-                    color: PRIMARY_COLOR,
-                    my: 3,
+      <Typography
+        sx={{
+          textAlign: "center",
+          fontWeight: "bold",
+          color: PRIMARY_COLOR,
+          my: 3,
+        }}
+        variant="h4"
+      >
+        CÁC TỪ PHỔ BIẾN
+      </Typography>
+      <Grid container spacing={2}>
+        {shuffleIndex.map((i) => {
+          const char = data.characters[i];
+          return (
+            <Grid item xs={12} sm={6} md={4} xl={3} key={uuidv4()}>
+              <Card
+                onClick={() => {
+                  handleSearch(
+                    `${char.chineseName} - ${char.pinyin}`,
+                    data.characters
+                  );
                 }}
-                variant="h4"
-            >
-                CÁC TỪ PHỔ BIẾN
-            </Typography>
-            <Grid container spacing={2}>
-                {shuffleIndex.map((i) => {
-                    const char = data.characters[i];
-                    return (
-                        <Grid item xs={12} sm={6} md={4} xl={3} key={uuidv4()}>
-                            <Card
-                                onClick={() => {
-                                    handleSearch(
-                                        `${char.chineseName} - ${char.pinyin}`,
-                                        data.characters
-                                    );
-                                }}
-                                sx={{
-                                    minWidth: 275,
-                                    height: "100%",
-                                    backgroundColor: PRIMARY_COLOR,
-                                    color: "#fff",
-                                    cursor: "pointer",
-                                }}
-                            >
-                                <CardContent>
-                                    <Typography
-                                        sx={{ fontSize: 14, color: "#fff" }}
-                                        color="text.secondary"
-                                        gutterBottom
-                                    >
-                                        {char.pinyin}
-                                    </Typography>
-                                    <Typography
-                                        variant="h3"
-                                        component="div"
-                                        sx={{
-                                            fontWeight: "bold",
-                                            textAlign: "center",
-                                        }}
-                                    >
-                                        {char.chineseName}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    );
-                })}
+                sx={{
+                  minWidth: 275,
+                  height: "100%",
+                  backgroundColor: PRIMARY_COLOR,
+                  color: "#fff",
+                  cursor: "pointer",
+                  ":hover": {
+                    backgroundColor: "#006878",
+                    transition: "all 0.5s",
+                  },
+                }}
+              >
+                <CardContent>
+                  <Typography
+                    sx={{ fontSize: 14, color: "#fff" }}
+                    color="text.secondary"
+                    gutterBottom
+                  >
+                    {char.pinyin}
+                  </Typography>
+                  <Typography
+                    variant="h3"
+                    component="div"
+                    sx={{
+                      fontWeight: "bold",
+                      textAlign: "center",
+                    }}
+                  >
+                    {char.chineseName}
+                  </Typography>
+                </CardContent>
+              </Card>
             </Grid>
-        </Template>
-    );
+          );
+        })}
+      </Grid>
+    </Template>
+  );
 };
 
 export async function getServerSideProps(ctx) {
-    try {
-        const data = await getCharactersClient().getAllChars();
-        return {
-            props: {
-                data: data || [],
-            },
-        };
-    } catch (e) {
-        console.log(e);
-        return {
-            props: {
-                data: {
-                    success: false,
-                    characters: [],
-                },
-            },
-        };
-    }
+  try {
+    const data = await getCharactersClient().getAllChars();
+    return {
+      props: {
+        data: data || [],
+      },
+    };
+  } catch (e) {
+    console.log(e);
+    return {
+      props: {
+        data: {
+          success: false,
+          characters: [],
+        },
+      },
+    };
+  }
 }
 
 export default Home;
