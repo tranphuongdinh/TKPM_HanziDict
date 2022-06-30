@@ -52,7 +52,8 @@ const Home = ({ data }) => {
                     textAlign: "center",
                     fontWeight: "bold",
                     color: PRIMARY_COLOR,
-                    my: 3,
+                    mb: 3,
+                    mt: 5,
                 }}
                 variant="h4"
             >
@@ -76,6 +77,10 @@ const Home = ({ data }) => {
                                     backgroundColor: PRIMARY_COLOR,
                                     color: "#fff",
                                     cursor: "pointer",
+                                    ":hover": {
+                                        backgroundColor: "#006878",
+                                        transition: "all 0.5s",
+                                    },
                                 }}
                             >
                                 <CardContent>

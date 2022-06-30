@@ -5,6 +5,8 @@ import { Container } from "@mui/material";
 import "font-awesome/css/font-awesome.min.css";
 import styles from "./styles.module.scss";
 import Link from "next/link";
+import Image from "next/image";
+import logo from "/public/images/logocute.png";
 import Typography from "@mui/material/Typography";
 
 const Footer = () => {
@@ -53,6 +55,15 @@ const Footer = () => {
             hanzi@gmail.com
           </a>
         </div>
+        <a href="/" className={styles.logo}>
+          <Image
+            src={logo}
+            className={styles.img}
+            width={220}
+            height={180}
+            alt="logo"
+          />
+        </a>
       </Container>
       <p className={styles.copyright}>
         &copy; 2022 | TKPM Team TPĐ - ĐMB - VNT
