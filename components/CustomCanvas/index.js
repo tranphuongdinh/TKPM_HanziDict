@@ -48,12 +48,6 @@ const CustomCanvas = () => {
     const wrapperRef = useRef(null);
 
     useEffect(() => {
-        const rawData = localStorage.getItem("savedDrawing");
-        if (rawData) {
-            const data = JSON.parse(rawData);
-            setSaveableCanvas(data.lines);
-            setCanvasProps({ ...canvasProps, ...data });
-        }
         const wrapperWidth = wrapperRef.current.clientWidth;
 
         setCanvasWidth(wrapperWidth - 40);

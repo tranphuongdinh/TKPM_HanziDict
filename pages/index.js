@@ -13,9 +13,12 @@ import Template from "/containers/Template";
 const Home = ({ data }) => {
     const router = useRouter();
 
-    const shuffleIndex = shuffle(
-        Array.from(Array(data.characters.length).keys())
-    ).slice(0, 10);
+    const shuffleIndex = data?.characters?.length
+        ? shuffle(Array.from(Array(data?.characters?.length).keys())).slice(
+              0,
+              10
+          )
+        : [];
 
     const handleSearch = async (searchText, allChars) => {
         const searchChar = allChars.filter((char) => {
