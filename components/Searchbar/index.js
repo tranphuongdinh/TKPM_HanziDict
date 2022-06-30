@@ -59,7 +59,7 @@ export default function SearchBar({ allChars, handleSearch }) {
                 })
                 .then((result) => {
                     const text = result?.data?.text || "";
-                    setSearchText(text[0]);
+                    setSearchText(text);
                     setOutputImage("");
                     setLoading(false);
                 });
