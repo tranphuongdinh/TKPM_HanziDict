@@ -15,7 +15,13 @@ export default function SearchBar({ allChars, handleSearch }) {
     };
 
     return (
-        <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box
+            sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+            }}
+        >
             <Autocomplete
                 sx={{ width: "80%" }}
                 freeSolo

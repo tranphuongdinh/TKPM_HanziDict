@@ -1,5 +1,6 @@
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
+import { PRIMARY_COLOR } from "../../constants/style";
 import Template from "/containers/Template";
 const Contribution = () => {
     const router = useRouter();
@@ -14,6 +15,7 @@ const Contribution = () => {
             >
                 Hiện chưa có dữ liệu cho từ này, bạn có muốn{" "}
                 <b
+                    style={{ color: PRIMARY_COLOR, cursor: "pointer" }}
                     onClick={() => {
                         router.push({
                             pathname: "/contribution",
@@ -22,8 +24,8 @@ const Contribution = () => {
                     }}
                 >
                     Đóng góp
-                </b>
-                ?
+                </b>{" "}
+                không ?
             </Typography>
         </Template>
     );

@@ -16,7 +16,7 @@ const columns = [
     { field: "pinyin", headerName: "Pinyin", width: 150 },
     {
         field: "date",
-        headerName: "date",
+        headerName: "Ngày đóng góp",
         type: "dateTime",
         width: 180,
     },
@@ -39,6 +39,7 @@ const mapListToRows = (contributedList) => {
         };
     });
 };
+
 const UserProfile = () => {
     const [updateMode, setUpdateMode] = useState(false);
     const [email, setEmail] = useState("default@gmail.com");
@@ -248,21 +249,22 @@ const UserProfile = () => {
                 </Box>
             </div>
 
-            <div className={styles.contributedList}>
-                <h2>Danh sách các từ đóng góp</h2>
+            <div
+                className={styles.contributedList}
+                style={{ height: rows.length !== 0 ? 420 : "initial" }}
+            >
+                <h2>Các từ đã đóng góp</h2>
 
                 {rows.length !== 0 ? (
-                    <>
-                        <DataGrid
-                            rows={rows}
-                            columns={columns}
-                            pageSize={5}
-                            rowsPerPageOptions={[5]}
-                            sx={{
-                                padding: 2,
-                            }}
-                        />
-                    </>
+                    <DataGrid
+                        rows={rows}
+                        columns={columns}
+                        pageSize={5}
+                        rowsPerPageOptions={[5]}
+                        sx={{
+                            padding: 2,
+                        }}
+                    />
                 ) : (
                     <span>Chưa có đóng góp</span>
                 )}

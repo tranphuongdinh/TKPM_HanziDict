@@ -30,6 +30,9 @@ const Home = ({ data }) => {
         } else {
             router.push({
                 pathname: "/characters/not-found",
+                query: {
+                    searchText,
+                },
             });
         }
     };

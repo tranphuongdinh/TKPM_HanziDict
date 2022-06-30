@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Modal } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -13,54 +13,87 @@ import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import { getCharactersClient } from "../../apis/getCharactersClient";
 import LoadingScreen from "../../components/LoadingScreen";
+import EditCharForm from "/components/EditCharForm";
 
 export default function CharsTable({ data, type }) {
     const [charsData, setCharsData] = useState(data || []);
     const [loading, setLoading] = useState(false);
+    const [defaultChar, setDefaultChar] = useState(null);
     const router = useRouter();
 
     useEffect(() => {
         setCharsData(data);
     }, [data]);
 
-    const handleUpdate = async (character, action) => {
-        const id = character._id;
-        setLoading(true);
-        if (action === "DELETE") {
-            const res = await getCharactersClient().deleteChar(id);
-            if (res?.success) {
-                toast.success("Xóa thành công");
-                const newCharsData = charsData.filter((char) => char.id !== id);
-                setCharsData(newCharsData);
+    const handleUpdate = async (character, action, newCharacter = {}) => {
+        try {
+            const id = character._id;
+            setLoading(true);
+            if (action === "DELETE") {
+                const res = await getCharactersClient().deleteChar(id);
+                if (res?.success) {
+                    toast.success("Xóa thành công");
+                }
             }
-        }
-        if (action === "ACTIVATE") {
-            const res = await getCharactersClient().activateChar(id);
-            if (res?.success) {
-                toast.success("Kích hoạt thành công");
-                const newCharsData = charsData.filter((char) => char.id !== id);
-                setCharsData(newCharsData);
+            if (action === "ACTIVATE") {
+                const res = await getCharactersClient().activateChar(id);
+                if (res?.success) {
+                    toast.success("Kích hoạt thành công");
+                }
             }
-        }
 
-        if (action === "DEACTIVATE") {
-            const res = await getCharactersClient().updateChar(id, {
-                isActive: false,
-            });
-            if (res?.success) {
-                toast.success("Hủy kích hoạt thành công");
-                const newCharsData = charsData.filter((char) => char.id !== id);
-                setCharsData(newCharsData);
+            if (action === "DEACTIVATE") {
+                const res = await getCharactersClient().updateChar(id, {
+                    isActive: false,
+                });
+                if (res?.success) {
+                    toast.success("Hủy kích hoạt thành công");
+                }
             }
-        }
 
-        setLoading(false);
-        router.reload();
+            if (action === "UPDATE") {
+                const res = await getCharactersClient().updateChar(
+                    id,
+                    newCharacter
+                );
+                if (res?.success) {
+                    toast.success("Cập nhật thành công");
+                }
+            }
+
+            setTimeout(() => {
+                router.reload();
+            }, 1000);
+            setLoading(false);
+        } catch (e) {
+            setLoading(false);
+            toast.error("Có lỗi xảy ra!");
+        }
     };
 
     return (
         <TableContainer component={Paper}>
             {loading && <LoadingScreen />}
+            <Modal
+                open={!!defaultChar}
+                onClose={() => {
+                    setDefaultChar(null);
+                }}
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+            >
+                <EditCharForm
+                    defaultChar={{ ...defaultChar }}
+                    handleUpdate={handleUpdate}
+                    handleClose={() => {
+                        setDefaultChar(null);
+                    }}
+                />
+            </Modal>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
@@ -110,8 +143,19 @@ export default function CharsTable({ data, type }) {
                                     : "Chưa kích hoạt"}
                             </TableCell>
                             <TableCell align="center">
+                                <Button
+                                    sx={{ m: 1 }}
+                                    variant="contained"
+                                    onClick={() => {
+                                        setDefaultChar(char);
+                                    }}
+                                    color="success"
+                                >
+                                    Chi tiết
+                                </Button>
                                 {type === "ACTIVATE" ? (
                                     <Button
+                                        sx={{ m: 1 }}
                                         variant="contained"
                                         onClick={() => {
                                             handleUpdate(char, "DEACTIVATE");
@@ -121,6 +165,7 @@ export default function CharsTable({ data, type }) {
                                     </Button>
                                 ) : (
                                     <Button
+                                        sx={{ m: 1 }}
                                         variant="contained"
                                         onClick={() => {
                                             handleUpdate(char, "ACTIVATE");
@@ -131,7 +176,8 @@ export default function CharsTable({ data, type }) {
                                 )}
                                 <Button
                                     variant="contained"
-                                    sx={{ ml: 2 }}
+                                    sx={{ m: 1 }}
+                                    color="error"
                                     onClick={() => {
                                         handleUpdate(char, "DELETE");
                                     }}

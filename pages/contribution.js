@@ -2,6 +2,7 @@ import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 import { useContext } from "react";
 import ContributionForm from "/components/ContributionForm";
+import { PRIMARY_COLOR } from "/constants/style";
 import Template from "/containers/Template";
 import { AuthContext } from "/context/auth/auth.context";
 const Contribution = () => {
@@ -11,17 +12,22 @@ const Contribution = () => {
 
     const router = useRouter();
 
-    const { chineseName = "", pinyin = "" } = router.query;
+    const { searchText = "" } = router.query;
 
-    const defaultChar = { chineseName, pinyin };
+    const defaultChar = { pinyin: searchText, chineseName: searchText };
 
     return (
-        <Template title="Contribution | Hanzi Dict">
+        <Template title="Đóng góp | Hanzi Dict">
             <Typography
                 gutterBottom
-                variant="h5"
+                variant="h4"
                 component="div"
-                sx={{ fontWeight: "bold" }}
+                sx={{
+                    fontWeight: "bold",
+                    color: PRIMARY_COLOR,
+                    textAlign: "center",
+                    mb: 2,
+                }}
             >
                 Đóng góp chiết tự{" "}
             </Typography>{" "}

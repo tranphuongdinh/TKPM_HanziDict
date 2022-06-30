@@ -108,7 +108,7 @@ const CustomCanvas = () => {
                                     );
                                 }}
                             >
-                                Save
+                                Lưu
                             </Button>
                             <Button
                                 variant="contained"
@@ -118,7 +118,7 @@ const CustomCanvas = () => {
                                     saveableCanvas.eraseAll();
                                 }}
                             >
-                                Erase
+                                Xóa
                             </Button>
                             <Button
                                 startIcon={<UndoIcon />}
@@ -128,7 +128,7 @@ const CustomCanvas = () => {
                                     saveableCanvas.undo();
                                 }}
                             >
-                                Undo
+                                Quay lại
                             </Button>
 
                             <Button
@@ -140,12 +140,12 @@ const CustomCanvas = () => {
                                     setOutputImage("");
                                 }}
                             >
-                                Clear
+                                Đặt lại
                             </Button>
                         </div>
 
                         <div className={styles.sliderItem}>
-                            <span className={styles.label}>Line width: </span>
+                            <span className={styles.label}>Độ dày nét vẽ </span>
                             <InputRange
                                 minValue={3}
                                 value={lineWidth}
@@ -154,7 +154,12 @@ const CustomCanvas = () => {
                             />
                         </div>
                         <div className={styles.sliderItem}>
-                            <span className={styles.label}>Brush color: </span>
+                            <span
+                                className={styles.label}
+                                style={{ marginBottom: 5, marginTop: 30 }}
+                            >
+                                Màu nét vẽ
+                            </span>
                             <div className={styles.colorPicker}>
                                 <HexColorPicker
                                     color={brushColor}
