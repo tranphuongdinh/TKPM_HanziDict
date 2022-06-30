@@ -10,6 +10,9 @@ import { getCharactersClient } from "/apis/getCharactersClient";
 import Searchbar from "/components/Searchbar";
 import Template from "/containers/Template";
 
+import React from "react";
+import Slider from "react-slick";
+
 const Home = ({ data }) => {
   const router = useRouter();
 
@@ -34,14 +37,65 @@ const Home = ({ data }) => {
       });
     }
   };
-
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
   return (
     <Template title="Trang chủ | Hanzi Dict">
+      {" "}
+      <Slider {...settings}>
+        <div>
+          <img
+            src="https://img.theculturetrip.com/1440x/smart/wp-content/uploads/2017/04/characters5.png
+            "
+            width="100%"
+          />
+        </div>
+        <div>
+          <img
+            src="https://img.theculturetrip.com/1440x/smart/wp-content/uploads/2017/04/characters4.png"
+            width="100%"
+          />
+        </div>
+        <div>
+          <img
+            src="https://img.theculturetrip.com/1440x/smart/wp-content/uploads/2017/04/characters2.png"
+            width="100%"
+          />
+        </div>
+        <div>
+          <img
+            src="https://img.theculturetrip.com/1440x/smart/wp-content/uploads/2017/04/characters1.png"
+            width="100%"
+          />
+        </div>
+        <div>
+          <img
+            src="https://img.theculturetrip.com/1440x/smart/wp-content/uploads/2017/04/characters.png"
+            width="100%"
+          />
+        </div>
+        <div>
+          <img
+            src="https://img.theculturetrip.com/1440x/smart/wp-content/uploads/2017/04/keep-your-focus-on-the-summit2.png"
+            width="100%"
+          />
+        </div>
+        <div>
+          <img
+            src="https://img.theculturetrip.com/1440x/smart/wp-content/uploads/2017/04/characters3.png"
+            width="100%"
+          />
+        </div>
+      </Slider>
       <Searchbar
         allChars={data?.characters || []}
         handleSearch={handleSearch}
       ></Searchbar>
-
       <Typography
         sx={{
           textAlign: "center",
