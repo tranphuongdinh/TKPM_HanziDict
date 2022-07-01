@@ -6,9 +6,11 @@ const { useRouter } = require("next/router");
 
 export const CharacterDetail = ({ data }) => {
     const router = useRouter();
-    const character = data.character;
-    const [count, setCount] = useState(1);
-    const [image, setImage] = useState({ src: character.img[0], index: 0 });
+    const character = data?.character || {};
+    const [image, setImage] = useState({
+        src: data?.character?.img[0] || "",
+        index: 0,
+    });
 
     const num = character.img.length;
 
