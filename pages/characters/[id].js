@@ -9,7 +9,7 @@ const SearchResult = ({ data }) => {
             : "";
     return (
         <Template title={`${title || "Chi tiết từ"} | Hanzi Dict`}>
-            <CharacterDetail data={data} />
+            <CharacterDetail data={{ ...data }} />
         </Template>
     );
 };

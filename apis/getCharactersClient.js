@@ -35,17 +35,6 @@ class CharactersClient {
             });
     }
 
-    getCommonChars() {
-        return axios
-            .get(`${CHAR_URI}/commonCharacters`)
-            .then((response) => {
-                return response.data;
-            })
-            .catch((error) => {
-                return error?.response?.data;
-            });
-    }
-
     getCharById(id) {
         return axios
             .get(`${CHAR_URI}/getCharacter/${id}`)
@@ -93,17 +82,6 @@ class CharactersClient {
     updateChar(id, formData) {
         return axios
             .put(`${CHAR_URI}/updateCharacter/${id}`, { ...formData })
-            .then((response) => {
-                return response.data;
-            })
-            .catch((error) => {
-                return error?.response?.data;
-            });
-    }
-
-    search(prefix) {
-        return axios
-            .get(`${CHAR_URI}/autocomplete/${prefix}`)
             .then((response) => {
                 return response.data;
             })

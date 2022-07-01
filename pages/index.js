@@ -71,6 +71,8 @@ const Home = ({ data }) => {
                     {Array.from(Array(8).keys()).map((i) => (
                         <Box key={uuidv4()} className="slider-item-home">
                             <Image
+                                loading="eager"
+                                quality={50}
                                 priority
                                 src={`/images/slider-image-${i + 1}.webp`}
                                 layout="fill"

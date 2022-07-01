@@ -2,8 +2,10 @@ import Card from "@mui/material/Card";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
+const { useRouter } = require("next/router");
 
 export const CharacterDetail = ({ data }) => {
+    const router = useRouter();
     const character = data.character;
     const [count, setCount] = useState(1);
     const [image, setImage] = useState({ src: character.img[0], index: 0 });
@@ -16,6 +18,12 @@ export const CharacterDetail = ({ data }) => {
             index: (state.index + 1) % num,
         }));
     };
+
+    useEffect(() => {
+        if (!data?.character) {
+            router.reload();
+        }
+    }, [data]);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -57,7 +65,13 @@ export const CharacterDetail = ({ data }) => {
             </Card>
             <Card className={styles.expandInfoWapper}>
                 <div className={styles.animation}>
-                    <Image src={image.src} alt="" layout="fill" priority />
+                    <Image
+                        src={image.src}
+                        alt={`${character.chineseName}-image`}
+                        layout="fill"
+                        priority
+                        loading="eager"
+                    />
                 </div>
 
                 <div className={styles.explain}>
