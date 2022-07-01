@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import Slider from "react-slick";
 import { v4 as uuidv4 } from "uuid";
 import { PRIMARY_COLOR } from "../constants/style";
@@ -51,6 +52,12 @@ const Home = ({ data }) => {
         autoplay: true,
         arrows: false,
     };
+
+    useEffect(() => {
+        if (!data?.characters?.length) {
+            router.reload();
+        }
+    }, []);
 
     return (
         <Template title="Tra cứu | Hanzi Dict">

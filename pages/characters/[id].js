@@ -3,9 +3,12 @@ import { getCharactersClient } from "/apis/getCharactersClient";
 import Template from "/containers/Template";
 
 const SearchResult = ({ data }) => {
-    const title = `${data.character.chineseName} - ${data.character.pinyin}`;
+    const title =
+        data?.character?.pinyin && data?.character?.chineseName
+            ? `${data.character.chineseName} - ${data.character.pinyin}`
+            : "";
     return (
-        <Template title={`${title} | Hanzi Dict`}>
+        <Template title={`${title || "Chi tiết từ"} | Hanzi Dict`}>
             <CharacterDetail data={data} />
         </Template>
     );
