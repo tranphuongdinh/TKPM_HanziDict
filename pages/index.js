@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, NoSsr } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
@@ -59,23 +59,25 @@ const Home = ({ data }) => {
                 handleSearch={handleSearch}
             ></Searchbar>
 
-            <Slider {...settings} style={{ margin: "40px 0 60px 0" }}>
-                {Array.from(Array(8).keys()).map((i) => (
-                    <Box key={uuidv4()} className="slider-item-home">
-                        <Image
-                            priority
-                            src={`/images/slider-image-${i + 1}.webp`}
-                            layout="fill"
-                            alt={`image-slider-${i}`}
-                            style={{
-                                width: "100%",
-                                height: "100%",
-                                borderRadius: 5,
-                            }}
-                        />
-                    </Box>
-                ))}
-            </Slider>
+            <NoSsr>
+                <Slider {...settings} style={{ margin: "40px 0 60px 0" }}>
+                    {Array.from(Array(8).keys()).map((i) => (
+                        <Box key={uuidv4()} className="slider-item-home">
+                            <Image
+                                priority
+                                src={`/images/slider-image-${i + 1}.webp`}
+                                layout="fill"
+                                alt={`image-slider-${i}`}
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    borderRadius: 5,
+                                }}
+                            />
+                        </Box>
+                    ))}
+                </Slider>
+            </NoSsr>
 
             <Typography
                 sx={{

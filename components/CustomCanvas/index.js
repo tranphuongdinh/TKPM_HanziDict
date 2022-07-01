@@ -3,14 +3,16 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from "@mui/icons-material/Save";
 import UndoIcon from "@mui/icons-material/Undo";
 import { Button, TextField } from "@mui/material";
+import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
+import Grid from "@mui/material/Grid";
+import Input from "@mui/material/Input";
+import Slider from "@mui/material/Slider";
 import { saveAs } from "file-saver";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import CanvasDraw from "react-canvas-draw";
 import { HexColorPicker } from "react-colorful";
-import InputRange from "react-input-range";
-import "react-input-range/lib/css/index.css";
 import styles from "./styles.module.scss";
 const CustomCanvas = () => {
     const [writeChar, setWriteChar] = useState("");
@@ -139,18 +141,85 @@ const CustomCanvas = () => {
                         </div>
 
                         <div className={styles.sliderItem}>
-                            <span className={styles.label}>Độ dày nét vẽ </span>
-                            <InputRange
-                                minValue={3}
-                                value={lineWidth}
-                                maxValue={20}
-                                onChange={(value) => setLineWidth(value)}
-                            />
+                            <span
+                                className={styles.label}
+                                style={{ marginBottom: 0, marginTop: 30 }}
+                            >
+                                Độ dày nét vẽ{" "}
+                            </span>
+                            <Box sx={{ width: "100%" }}>
+                                <Grid container spacing={2} alignItems="center">
+                                    <Grid item xs>
+                                        <Slider
+                                            value={
+                                                typeof lineWidth === "number"
+                                                    ? lineWidth
+                                                    : 0
+                                            }
+                                            onChange={(e, value) => {
+                                                setLineWidth(value);
+                                            }}
+                                            onBlur={() => {
+                                                if (lineWidth < 3) {
+                                                    setLineWidth(3);
+                                                } else if (lineWidth > 20) {
+                                                    setLineWidth(20);
+                                                }
+                                            }}
+                                            aria-labelledby="input-slider"
+                                            min={3}
+                                            max={20}
+                                            step={1}
+                                        />
+                                    </Grid>
+                                    <Grid item>
+                                        <Input
+                                            sx={{ maxWidth: 40 }}
+                                            value={lineWidth}
+                                            onKeyUp={(e) => {
+                                                if (lineWidth > 20) {
+                                                    setLineWidth(20);
+                                                }
+                                                if (lineWidth < 3) {
+                                                    setLineWidth(3);
+                                                }
+                                            }}
+                                            onChange={(e) => {
+                                                let newLineWidth = parseInt(
+                                                    e.target.value
+                                                );
+                                                if (newLineWidth > 20) {
+                                                    newLineWidth = 20;
+                                                }
+                                                if (newLineWidth < 3) {
+                                                    newLineWidth = 3;
+                                                }
+                                                setLineWidth(newLineWidth);
+                                            }}
+                                            onBlur={() => {
+                                                if (lineWidth < 3) {
+                                                    setLineWidth(3);
+                                                } else if (lineWidth > 20) {
+                                                    setLineWidth(20);
+                                                }
+                                            }}
+                                            inputProps={{
+                                                step: 1,
+                                                min: 3,
+                                                max: 20,
+                                                type: "number",
+                                                "aria-labelledby":
+                                                    "input-slider",
+                                            }}
+                                        />
+                                    </Grid>
+                                </Grid>
+                            </Box>
                         </div>
                         <div className={styles.sliderItem}>
                             <span
                                 className={styles.label}
-                                style={{ marginBottom: 5, marginTop: 30 }}
+                                style={{ marginBottom: 5 }}
                             >
                                 Màu nét vẽ
                             </span>

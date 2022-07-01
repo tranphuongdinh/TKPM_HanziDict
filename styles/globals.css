@@ -134,6 +134,10 @@ textarea {
   position: relative;
 }
 
+.MuiSlider-root {
+  color: #0091a7 !important;
+}
+
 @media (max-width: 1068px) {
   .slider-item-home {
     height: 400px;
