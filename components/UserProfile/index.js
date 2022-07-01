@@ -142,6 +142,7 @@ const UserProfile = () => {
                                     label="Mật khẩu cũ"
                                     variant="outlined"
                                     type="password"
+                                    autoComplete="current-password"
                                     disabled={!updateMode}
                                     style={
                                         !updateMode
@@ -168,6 +169,7 @@ const UserProfile = () => {
                                     label="Mật khẩu mới"
                                     variant="outlined"
                                     type="password"
+                                    autoComplete="new-password"
                                     disabled={!updateMode}
                                     style={
                                         !updateMode
@@ -195,6 +197,7 @@ const UserProfile = () => {
                                     label="Xác nhận mật khẩu mới"
                                     variant="outlined"
                                     type="password"
+                                    autoComplete="confirm-new-password"
                                     disabled={!updateMode}
                                     style={
                                         !updateMode

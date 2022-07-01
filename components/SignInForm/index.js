@@ -89,6 +89,7 @@ export default function SignInForm() {
                             helperText={errors?.password?.message}
                             variant="standard"
                             type="password"
+                            autoComplete="current-password"
                             {...field}
                         />
                     )}
