@@ -86,66 +86,81 @@ const Home = ({ data }) => {
                 </Slider>
             </NoSsr>
 
-            <Typography
-                sx={{
-                    textAlign: "center",
-                    fontWeight: "bold",
-                    color: PRIMARY_COLOR,
-                    mb: 3,
-                    mt: 10,
-                }}
-                variant="h4"
-            >
-                CÁC TỪ PHỔ BIẾN
-            </Typography>
-            <Grid container spacing={2} justifyContent="center">
-                {shuffleIndex.map((i) => {
-                    const char = data.characters[i];
-                    return (
-                        <Grid item xs={12} sm={6} md={4} xl={3} key={uuidv4()}>
-                            <Card
-                                onClick={() => {
-                                    handleSearch(
-                                        `${char.chineseName} - ${char.pinyin}`,
-                                        data.characters
-                                    );
-                                }}
-                                sx={{
-                                    minWidth: 275,
-                                    height: "100%",
-                                    backgroundColor: PRIMARY_COLOR,
-                                    color: "#fff",
-                                    cursor: "pointer",
-                                    ":hover": {
-                                        backgroundColor: "#006878",
-                                        transition: "all 0.5s",
-                                    },
-                                }}
-                            >
-                                <CardContent>
-                                    <Typography
-                                        sx={{ fontSize: 14, color: "#fff" }}
-                                        color="text.secondary"
-                                        gutterBottom
-                                    >
-                                        {char.pinyin}
-                                    </Typography>
-                                    <Typography
-                                        variant="h3"
-                                        component="div"
+            {data?.characters && data?.characters?.length > 0 && (
+                <>
+                    {" "}
+                    <Typography
+                        sx={{
+                            textAlign: "center",
+                            fontWeight: "bold",
+                            color: PRIMARY_COLOR,
+                            mb: 3,
+                            mt: 10,
+                        }}
+                        variant="h4"
+                    >
+                        CÁC TỪ PHỔ BIẾN
+                    </Typography>
+                    <Grid container spacing={2} justifyContent="center">
+                        {shuffleIndex.map((i) => {
+                            const char = data.characters[i];
+                            return (
+                                <Grid
+                                    item
+                                    xs={12}
+                                    sm={6}
+                                    md={4}
+                                    xl={3}
+                                    key={uuidv4()}
+                                >
+                                    <Card
+                                        onClick={() => {
+                                            handleSearch(
+                                                `${char.chineseName} - ${char.pinyin}`,
+                                                data.characters
+                                            );
+                                        }}
                                         sx={{
-                                            fontWeight: "bold",
-                                            textAlign: "center",
+                                            minWidth: 275,
+                                            height: "100%",
+                                            backgroundColor: PRIMARY_COLOR,
+                                            color: "#fff",
+                                            cursor: "pointer",
+                                            ":hover": {
+                                                backgroundColor: "#006878",
+                                                transition: "all 0.5s",
+                                            },
                                         }}
                                     >
-                                        {char.chineseName}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    );
-                })}
-            </Grid>
+                                        <CardContent>
+                                            <Typography
+                                                sx={{
+                                                    fontSize: 14,
+                                                    color: "#fff",
+                                                }}
+                                                color="text.secondary"
+                                                gutterBottom
+                                            >
+                                                {char.pinyin}
+                                            </Typography>
+                                            <Typography
+                                                variant="h3"
+                                                component="div"
+                                                sx={{
+                                                    fontWeight: "bold",
+                                                    textAlign: "center",
+                                                }}
+                                            >
+                                                {char.chineseName}
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                            );
+                        })}
+                    </Grid>
+                </>
+            )}
         </Template>
     );
 };

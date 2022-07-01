@@ -57,7 +57,7 @@ export const CharacterDetail = ({ data }) => {
             </Card>
             <Card className={styles.expandInfoWapper}>
                 <div className={styles.animation}>
-                    <Image src={image.src} alt="" layout="fill" />
+                    <Image src={image.src} alt="" layout="fill" priority />
                 </div>
 
                 <div className={styles.explain}>

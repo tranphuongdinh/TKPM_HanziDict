@@ -128,7 +128,7 @@ const ContributionForm = ({ defaultChar }) => {
                     })}
                 </Grid>
                 <NoSsr>
-                    <Box sx={{ mt: 2, my: 2 }}>
+                    <Box sx={{ mt: 2, my: 2 }} className="fileUploadWrapper">
                         <FileUpload
                             multiFile={true}
                             disabled={false}

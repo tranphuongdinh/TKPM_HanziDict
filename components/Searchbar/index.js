@@ -59,6 +59,9 @@ export default function SearchBar({ allChars, handleSearch }) {
                 })
                 .then((result) => {
                     const text = result?.data?.text || "";
+                    if (text === "") {
+                        toast.error("Không nhận diện được ảnh!");
+                    }
                     setSearchText(text);
                     setOutputImage("");
                     setLoading(false);
@@ -176,11 +179,22 @@ export default function SearchBar({ allChars, handleSearch }) {
 
                 <label htmlFor="icon-button-file">
                     <Input
-                        accept="image/*"
+                        inputProps={{ accept: "image/jpeg, image/png" }}
                         id="icon-button-file"
                         type="file"
                         onChange={(e) => {
                             if (e?.target?.files[0]) {
+                                if (
+                                    !e?.target?.files[0]?.type.includes(
+                                        "jpeg"
+                                    ) &&
+                                    !e?.target?.files[0]?.type.includes("png")
+                                ) {
+                                    toast.error(
+                                        "Vui lòng chọn tệp có định dạng .jpg hoặc .png"
+                                    );
+                                    return;
+                                }
                                 const dataUrl = URL.createObjectURL(
                                     e.target.files[0]
                                 );

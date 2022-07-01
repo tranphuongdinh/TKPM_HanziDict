@@ -122,6 +122,7 @@ export default function CharsTable({ data, type }) {
                             <TableCell align="center">
                                 {char.img.map((image) => (
                                     <Image
+                                        priority
                                         width={40}
                                         height={40}
                                         style={{

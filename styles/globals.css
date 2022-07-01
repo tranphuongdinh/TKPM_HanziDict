@@ -100,29 +100,30 @@ textarea {
   background-color: #0091a7e9 !important;
 }
 
-.css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected,
-.css-1s5vo3j-MuiButtonBase-root-MuiButton-root,
-.css-1e6y48t-MuiButtonBase-root-MuiButton-root {
+.fileUploadWrapper .MuiButtonBase-root-MuiTab-root.Mui-selected,
+.fileUploadWrapper .MuiButtonBase-root-MuiButton-root,
+.fileUploadWrapper .MuiButtonBase-root-MuiButton-root {
   color: #0091a7 !important;
 }
 
-.css-1aquho2-MuiTabs-indicator,
-.css-1cqlu4k-MuiButtonBase-root-MuiButton-root {
+.fileUploadWrapper .MuiTabs-indicator,
+.fileUploadWrapper .MuiButtonBase-root-MuiButton-root {
   background-color: #0091a7 !important;
   padding: 6px 16px !important;
 }
 
-.css-1e6y48t-MuiButtonBase-root-MuiButton-root {
+.fileUploadWrapper .MuiButtonBase-root-MuiButton-root {
   margin-right: 20px !important;
 }
 
-.styles_active__YeEo9::after {
-  height: 1px !important;
-}
-
-.css-p171ze-MuiPaper-root {
+.fileUploadWrapper .MuiPaper-root {
   background: #0091a7 !important;
 }
+
+.fileUploadWrapper>.MuiPaper-root {
+  background: #fff !important;
+}
+
 
 .slick-active button::before {
   color: #0091a7 !important;

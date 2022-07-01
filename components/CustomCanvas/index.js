@@ -238,7 +238,9 @@ const CustomCanvas = () => {
                     variant="outlined"
                     //   sx={{ minWidth: "50%" }}
                 >
-                    {outputImage && <Image src={outputImage} layout="fill" />}
+                    {outputImage && (
+                        <Image src={outputImage} layout="fill" priority />
+                    )}
                 </Card>
             </div>
         </div>

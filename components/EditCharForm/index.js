@@ -191,6 +191,7 @@ const EditCharForm = ({ defaultChar, handleUpdate, handleClose }) => {
                                         <ClearIcon></ClearIcon>
                                     </IconButton>
                                     <Image
+                                        priority
                                         src={item}
                                         layout="fill"
                                         style={{ transform: "scale(0.7)" }}
@@ -202,7 +203,7 @@ const EditCharForm = ({ defaultChar, handleUpdate, handleClose }) => {
                     </ImageList>
                 </NoSsr>
                 <NoSsr>
-                    <Box sx={{ mt: 2, my: 2 }}>
+                    <Box sx={{ mt: 2, my: 2 }} className="fileUploadWrapper">
                         <FileUpload
                             multiFile={true}
                             disabled={false}

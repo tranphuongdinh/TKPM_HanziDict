@@ -111,7 +111,13 @@ const Header = () => {
                             textDecoration: "none",
                         }}
                     >
-                        <Image src={logo} width={60} height={50} alt="logo" />
+                        <Image
+                            src={logo}
+                            width={60}
+                            height={50}
+                            alt="logo"
+                            priority
+                        />
                     </Typography>
 
                     <Box
@@ -175,7 +181,13 @@ const Header = () => {
                             textDecoration: "none",
                         }}
                     >
-                        <Image src={logo} width={40} height={40} alt="logo" />
+                        <Image
+                            src={logo}
+                            width={40}
+                            height={40}
+                            alt="logo"
+                            priority
+                        />
                     </Typography>
                     <Box
                         sx={{
