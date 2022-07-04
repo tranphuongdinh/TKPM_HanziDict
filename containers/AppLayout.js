@@ -8,8 +8,8 @@ import Header from "./Header";
 import { getUserClient } from "/apis/getUserClient";
 import LoadingScreen from "/components/LoadingScreen";
 import {
-    PRIMARY_BACKGROUND_COLOR,
-    PRIMARY_COLOR_HOVER,
+	PRIMARY_BACKGROUND_COLOR,
+	PRIMARY_COLOR_HOVER
 } from "/constants/style";
 import { AuthContext } from "/context/auth/auth.context";
 
@@ -41,7 +41,10 @@ const AppLayout = ({ children }) => {
     }, []);
 
     return (
-        <div>
+        <div style={{
+						background: `url(/images/background.png) center no-repeat`,
+						backgroundSize: "cover",
+				}}>
             {loading && <LoadingScreen />}
             <NextNProgress color={PRIMARY_COLOR_HOVER} height={5} />
             <ToastContainer
