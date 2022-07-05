@@ -1,6 +1,8 @@
+import { Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { PRIMARY_COLOR } from "../../constants/style";
 import styles from "./styles.module.scss";
 const { useRouter } = require("next/router");
 
@@ -38,7 +40,19 @@ export const CharacterDetail = ({ data }) => {
 
     return (
         <div className={styles.wapper}>
-            <h1>Chi tiết từ {character.chineseName}</h1>
+            <Typography
+                gutterBottom
+                variant="h4"
+                component="div"
+                sx={{
+                    fontWeight: "bold",
+                    color: PRIMARY_COLOR,
+                    textAlign: "center",
+                    mb: 3,
+                }}
+            >
+                Chi tiết từ {character.chineseName}
+            </Typography>
             <Card className={styles.basicInfoWapper}>
                 <div className={styles.chineseCharacter}>
                     {character.chineseName}

@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { PRIMARY_COLOR } from "../constants/style";
 import Template from "/containers/Template";
 const About = () => {
     return (
@@ -13,13 +14,19 @@ const About = () => {
                 }}
             >
                 <Typography
+                    gutterBottom
                     variant="h4"
-                    sx={{ fontWeight: "bold", marginBottom: 3 }}
+                    component="div"
+                    sx={{
+                        fontWeight: "bold",
+                        color: PRIMARY_COLOR,
+                        textAlign: "center",
+                        mb: 2,
+                    }}
                 >
                     Câu chuyện của chúng tớ
                 </Typography>
                 <Typography variant="p" sx={{ textAlign: "justify" }}>
-                    {" "}
                     Hán tự là một thứ vô cùng đặc sắc, khiến tiếng Trung trở
                     thành một ngôn ngữ đặc biệt. Hán tự là một dạng chữ viết
                     tượng hình. Không chỉ đơn thuần là từ những hình ảnh quen
@@ -54,7 +61,6 @@ const About = () => {
                     variant="p"
                     sx={{ fontStyle: "italic", textAlign: "justify" }}
                 >
-                    {" "}
                     {`"Lúc đầu học tiếng Trung, cảm giác như tìm được chính mình. Bây giờ
           học tiếng Trung, cảm giác như tìm được thế giới mới, tươi đẹp hơn,
           rộng mở hơn, là nơi mình thuộc về."`}
