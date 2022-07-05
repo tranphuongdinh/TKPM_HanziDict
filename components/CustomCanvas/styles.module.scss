@@ -19,8 +19,13 @@
         overflow: hidden;
 
         @media (max-width: 800px) {
-            top: 50px;
-            font-size: 200px;
+            top: 60px;
+            font-size: 180px;
+        }
+
+        @media (max-width: 500px) {
+            top: 70px;
+            font-size: 160px;
         }
     }
 
@@ -48,7 +53,7 @@
                     justify-content: center;
                     flex-wrap: wrap;
                     button {
-                        min-width: 110px;
+                        min-width: 113px;
                     }
                 }
                 .sliderItem {
