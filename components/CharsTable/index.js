@@ -1,4 +1,4 @@
-import { Button, Modal } from "@mui/material";
+import { Button, Modal, TablePagination } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -20,6 +20,18 @@ export default function CharsTable({ data, type }) {
     const [loading, setLoading] = useState(false);
     const [defaultChar, setDefaultChar] = useState(null);
     const router = useRouter();
+
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
 
     useEffect(() => {
         setCharsData(data);
@@ -106,90 +118,113 @@ export default function CharsTable({ data, type }) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {charsData.map((char) => (
-                        <TableRow
-                            key={uuidv4()}
-                            sx={{
-                                "&:last-child td, &:last-child th": {
-                                    border: 0,
-                                },
-                            }}
-                        >
-                            <TableCell align="center">
-                                {char.chineseName}
-                            </TableCell>
-                            <TableCell align="center">{char.pinyin}</TableCell>
-                            <TableCell align="center">
-                                {char.img.map((image) => (
-                                    <Image
-                                        priority
-                                        width={40}
-                                        height={40}
-                                        style={{
-                                            margin: "0 10px",
-                                            display: "inline-block",
-                                        }}
-                                        key={uuidv4()}
-                                        src={image}
-                                        alt={char.chineseName}
-                                    />
-                                ))}
-                            </TableCell>
-                            <TableCell align="center">
-                                {new Date(char.timeUpload).toLocaleString()}
-                            </TableCell>
-                            <TableCell align="center">
-                                {char.isActive
-                                    ? "Đã kích hoạt"
-                                    : "Chưa kích hoạt"}
-                            </TableCell>
-                            <TableCell align="center">
-                                <Button
-                                    sx={{ m: 1 }}
-                                    variant="contained"
-                                    onClick={() => {
-                                        setDefaultChar(char);
-                                    }}
-                                    color="success"
-                                >
-                                    Chi tiết
-                                </Button>
-                                {type === "ACTIVATE" ? (
+                    {charsData
+                        .sort(function (a, b) {
+                            return b.timeUpload - a.timeUpload;
+                        })
+                        .slice(
+                            page * rowsPerPage,
+                            page * rowsPerPage + rowsPerPage
+                        )
+                        .map((char) => (
+                            <TableRow
+                                key={uuidv4()}
+                                sx={{
+                                    "&:last-child td, &:last-child th": {
+                                        border: 0,
+                                    },
+                                }}
+                            >
+                                <TableCell align="center">
+                                    {char.chineseName}
+                                </TableCell>
+                                <TableCell align="center">
+                                    {char.pinyin}
+                                </TableCell>
+                                <TableCell align="center">
+                                    {char.img.map((image) => (
+                                        <Image
+                                            priority
+                                            width={40}
+                                            height={40}
+                                            style={{
+                                                margin: "0 10px",
+                                                display: "inline-block",
+                                            }}
+                                            key={uuidv4()}
+                                            src={image}
+                                            alt={char.chineseName}
+                                        />
+                                    ))}
+                                </TableCell>
+                                <TableCell align="center">
+                                    {new Date(char.timeUpload).toLocaleString("vi-VN")}
+                                </TableCell>
+                                <TableCell align="center">
+                                    {char.isActive
+                                        ? "Đã kích hoạt"
+                                        : "Chưa kích hoạt"}
+                                </TableCell>
+                                <TableCell align="center">
                                     <Button
                                         sx={{ m: 1 }}
                                         variant="contained"
                                         onClick={() => {
-                                            handleUpdate(char, "DEACTIVATE");
+                                            setDefaultChar(char);
                                         }}
+                                        color="success"
                                     >
-                                        Hủy kích hoạt
+                                        Chi tiết
                                     </Button>
-                                ) : (
+                                    {type === "ACTIVATE" ? (
+                                        <Button
+                                            sx={{ m: 1 }}
+                                            variant="contained"
+                                            onClick={() => {
+                                                handleUpdate(
+                                                    char,
+                                                    "DEACTIVATE"
+                                                );
+                                            }}
+                                        >
+                                            Hủy kích hoạt
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            sx={{ m: 1 }}
+                                            variant="contained"
+                                            onClick={() => {
+                                                handleUpdate(char, "ACTIVATE");
+                                            }}
+                                        >
+                                            Kích hoạt
+                                        </Button>
+                                    )}
                                     <Button
-                                        sx={{ m: 1 }}
                                         variant="contained"
+                                        sx={{ m: 1 }}
+                                        color="error"
                                         onClick={() => {
-                                            handleUpdate(char, "ACTIVATE");
+                                            handleUpdate(char, "DELETE");
                                         }}
                                     >
-                                        Kích hoạt
+                                        Xóa
                                     </Button>
-                                )}
-                                <Button
-                                    variant="contained"
-                                    sx={{ m: 1 }}
-                                    color="error"
-                                    onClick={() => {
-                                        handleUpdate(char, "DELETE");
-                                    }}
-                                >
-                                    Xóa
-                                </Button>
-                            </TableCell>
-                        </TableRow>
-                    ))}
+                                </TableCell>
+                            </TableRow>
+                        ))}
                 </TableBody>
             </Table>
+            <TablePagination
+                rowsPerPageOptions={[5, 10, 20]}
+                component="div"
+                count={charsData.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+								labelRowsPerPage="Số dòng mỗi trang"
+            />
         </TableContainer>
     );
 }
